@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import { AudioManagerProvider } from "@/app/hooks/useAudioManager";
 import { KeyboardControls } from "@react-three/drei";
 import Experience from "@/app/components/Experience";
 import Interface from "@/app/components/Interface";
@@ -25,11 +24,9 @@ export default function App() {
 	], []);
 
 	return (
-		<AudioManagerProvider>
-			<KeyboardControls map={ controlsMap }>
-				<Experience />
-				<Interface />
-			</KeyboardControls>
-		</AudioManagerProvider>
+		<KeyboardControls map={ controlsMap }>
+			<Experience />
+			<Interface />
+		</KeyboardControls>
 	)
 }

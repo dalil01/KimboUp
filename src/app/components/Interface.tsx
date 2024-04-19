@@ -1,12 +1,10 @@
 import { useEffect, useRef } from "react";
 import { addEffect } from "@react-three/fiber";
-import { useAudioManager } from "@/app/hooks/useAudioManager";
 import GameStore, { GameState, GameStoreState } from "@/app/stores/GameStore";
 import { saveToKimbonet } from "@/app/actions/saveToKimbonet";
 
 export default function Interface() {
 
-	const { audioEnabled, setAudioEnabled } = useAudioManager();
 
 	const timeElementRef = useRef<any>();
 
@@ -55,8 +53,10 @@ export default function Interface() {
 		<div className={ `interface " + ${ gameState === GameState.LOBBY ? "interface-dark" : '' }` }>
 			<div className="interface-header">
 				<h1 className="logo">$KimboUp</h1>
+				{/*
 				<button className="audio"
 						onClick={ () => setAudioEnabled(!audioEnabled) }>{ audioEnabled ? "Mute" : "Son" }</button>
+				*/}
 			</div>
 
 			{ (gameState !== GameState.LOBBY && gameState !== GameState.ENDED) &&
