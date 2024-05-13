@@ -1,0 +1,47 @@
+@font-face {
+font-family: "icons";
+src: url("../fonts/icons.eot?541e653f53d69958c50f148ee46a1fb4#iefix") format("embedded-opentype"),
+url("../fonts/icons.svg?541e653f53d69958c50f148ee46a1fb4#icons") format("svg"),
+url("../fonts/icons.ttf?541e653f53d69958c50f148ee46a1fb4") format("truetype"),
+url("../fonts/icons.woff?541e653f53d69958c50f148ee46a1fb4") format("woff"),
+url("../fonts/icons.woff2?541e653f53d69958c50f148ee46a1fb4") format("woff2");
+}
+
+    i[class^="icon-"]:before, i[class*=" icon-"]:before {
+font-family: icons !important;
+font-style: normal;
+font-weight: normal !important;
+font-variant: normal;
+text-transform: none;
+line-height: 1;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+        .icon-dog:before {
+    content: "\f101";
+    }
+        .icon-info:before {
+    content: "\f102";
+    }
+        .icon-keyboard:before {
+    content: "\f103";
+    }
+        .icon-media:before {
+    content: "\f104";
+    }
+        .icon-play:before {
+    content: "\f105";
+    }
+        .icon-rankings:before {
+    content: "\f106";
+    }
+        .icon-settings:before {
+    content: "\f107";
+    }
+        .icon-volume-off:before {
+    content: "\f108";
+    }
+        .icon-volume-up:before {
+    content: "\f109";
+    }

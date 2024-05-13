@@ -1,0 +1,219 @@
+import { useEffect, useRef, useState } from "react";
+import { addEffect } from "@react-three/fiber";
+import GameStore, { GameState, GameStoreState, User } from "@/app/stores/GameStore";
+import {
+	getUserFromKimbonet,
+	getUsersPaginatedFromKimbonet,
+	saveToKimbonet
+} from "@/app/blockchain/actions/CarCity.kimbonet";
+import { Web3 } from "web3";
+
+
+export default function Interface() {
+
+
+	const timeElementRef = useRef<any>();
+	const timeElementRef2 = useRef<any>();
+
+	const user: User = GameStore((state: any) => state.user);
+	const setUser = GameStore((state: any) => state.setUser);
+
+	const gameState = GameStore((state: any) => state.state);
+
+	const ready = GameStore((state: any) => state.ready);
+	const restart = GameStore((state: any) => state.restart);
+
+	useEffect(() => {
+
+
+		const unsubscribeEffect = addEffect(() => {
+			const gameStoreState: any = GameStore.getState();
+
+			let elapsedTime = 0;
+
+
+			if (gameStoreState.state === GameState.STARTED) {
+				elapsedTime = Date.now() - gameStoreState.startTime;
+			} else if (gameStoreState.state == GameState.ENDED) {
+				elapsedTime = gameStoreState.endTime - gameStoreState.startTime;
+			}
+
+			elapsedTime /= 1000;
+
+			const minutes = Math.floor(elapsedTime / 60);
+			const seconds = Math.floor(elapsedTime % 60);
+
+			const formattedTime = `${ minutes.toString().padStart(2, '0') }:${ seconds.toString().padStart(2, '0') }`;
+
+			if (timeElementRef.current) {
+				timeElementRef.current.textContent = formattedTime;
+			}
+
+			if (gameStoreState.state === GameState.ENDED && timeElementRef2.current) {
+				timeElementRef2.current.textContent = formattedTime;
+			}
+		});
+
+		/*
+		getUsersPaginatedFromKimbonet(1, 10).then((result) => {
+			console.log(result);
+		})
+
+		 */
+
+		return () => {
+			unsubscribeEffect();
+		}
+	}, []);
+
+
+	const [web3, setWeb3] = useState<Web3>();
+	const [address, setAddress] = useState('');
+
+	const [loading, setLoading] = useState(false);
+	const [missingUsername, setMissingUsername] = useState(false);
+	const [saved, setSaved] = useState(false);
+	const errorRef = useRef<any>();
+
+	const saveToKimbonetHandler = async () => {
+		const address: string = await findWalletAddress() as string;
+		setAddress(address);
+
+		const userFromKimbonet = await getUserFromKimbonet(address);
+		console.log(userFromKimbonet);
+
+		let username = userFromKimbonet?.username;
+
+		if (userFromKimbonet) {
+			if (!username) {
+				setMissingUsername(true);
+				return;
+			}
+
+		} else {
+			if (!user.username) {
+				setMissingUsername(true);
+				return;
+			}
+
+			username = user.username;
+		}
+
+		continueSaving(address, username);
+	}
+
+	const continueSaving = (_address: string, username: string) => {
+		if (!username) {
+			errorRef.current.textContent = "Username is required."
+			return;
+		} else {
+			errorRef.current.textContent = '';
+		}
+
+		setLoading(true);
+
+		const gameStoreState: any = GameStore.getState();
+		const timeMs = gameStoreState.endTime - gameStoreState.startTime;
+		console.log("Time", timeMs)
+
+		if (_address && timeMs > 0) {
+			saveToKimbonet(_address, username, timeMs).then((response) => {
+				console.log(response);
+
+				setSaved(true);
+			});
+		} else {
+			errorRef.current.textContent = "Invalid address or time."
+		}
+
+		setLoading(false);
+	}
+
+	const findWalletAddress = async () => {
+		try {
+			let _web3 = web3;
+			if (!_web3) {
+				_web3 = new Web3(window.ethereum);
+				setWeb3(web3);
+			}
+
+			const accounts = await _web3.eth.requestAccounts();
+			return accounts[0];
+		} catch (e) {
+			console.error(e);
+
+			if (errorRef.current) {
+				errorRef.current.textContent = "Wallet not detected. Please install a wallet to connect like Metamask.";
+			}
+
+			setLoading(false);
+		}
+	}
+	
+
+
+	return (
+		<div className={ `interface " + ${ gameState === GameState.LOBBY ? "interface-dark" : '' }` }>
+			<div className="interface-header">
+				<h1 className="logo">$KimboUp</h1>
+				{/*
+				<button className="audio"
+						onClick={ () => setAudioEnabled(!audioEnabled) }>{ audioEnabled ? "Mute" : "Son" }</button>
+				*/ }
+			</div>
+
+			{ (gameState !== GameState.LOBBY && gameState !== GameState.ENDED) &&
+                <div className="time-container">
+                    <p className="time" ref={ timeElementRef }>0.00</p>
+                </div>
+			}
+
+			{ gameState === GameState.LOBBY &&
+                <div className="center-container">
+                    <input type="text" placeholder="Username" value={ user?.username } onChange={ (e) => {
+						setUser({ ...user, username: e.target.value });
+					} }/>
+                    <button className="start-btn" onClick={ ready }>Start</button>
+                </div>
+			}
+
+			{ gameState === GameState.ENDED &&
+                <div className="restart-container">
+                    <p className="time-restart">Time: <span ref={ timeElementRef2 }></span></p>
+
+					{ !saved ?
+						<div>
+							{ missingUsername ?
+								<>
+									<input type="text" placeholder="Username*" value={ user?.username }
+										   onChange={ (e) => {
+											   setUser({ ...user, username: e.target.value });
+										   } }/>
+
+									<button
+										onClick={ () => continueSaving(address, user.username) }>{ loading ? "Loading..." : "Continue" }</button>
+
+								</>
+
+
+								:
+								<>
+									<button
+										onClick={ saveToKimbonetHandler }>{ "Save to Kimbonet" }</button>
+								</>
+							}
+
+							<span ref={ errorRef }></span>
+						</div>
+
+						:
+						<p>Saved in kimbonet !</p>
+					}
+
+                    <button className="restart" onClick={ restart }>RESTART</button>
+                </div>
+			}
+		</div>
+	)
+}
+

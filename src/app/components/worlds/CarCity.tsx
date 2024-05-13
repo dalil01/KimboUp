@@ -1,7 +1,7 @@
 import { Environment, useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 import React, { useEffect, useRef, useState } from "react";
-import GameStore from "@/app/stores/GameStore";
+import { GameStore } from "@/app/stores/GameStore";
 
 type SquareParkProps = {}
 
@@ -58,9 +58,13 @@ export default function CarCity(props: SquareParkProps) {
 		setOk(true)
 	}, []);
 
+	/*
+				<Environment files="/hdrs/HDR_multi_nebulae.hdr" background/>
+
+	 */
+
 	return (
 		<>
-			<Environment files="/hdrs/fouriesburg_mountain_midday_1k.hdr" background/>
 			{ ok &&
                 <group position={ [0, 0, 0] }>
 					{ startStartPlatform &&

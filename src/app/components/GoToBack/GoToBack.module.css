@@ -1,0 +1,14 @@
+.container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding: 1.2% 6%;
+    color: var(--text-white);
+    background: var(--background-color-4);
+    border-top-left-radius: 42px;
+    border-bottom-left-radius: 3px;
+    text-decoration: none;
+    box-shadow: var(--box-shadow);
+}

@@ -1,9 +1,9 @@
 "use client";
 
-import App from "@/app/components/App";
+import Experience from "@/app/components/Experience";
 
 export default function MainPage() {
   return (
-    <App />
+    <Experience />
   );
 }

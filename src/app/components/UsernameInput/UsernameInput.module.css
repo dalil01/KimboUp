@@ -1,0 +1,23 @@
+.container {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 360px;
+    border: 5px solid var(--background-color-3);
+    border-radius: 16px;
+    z-index: 100;
+}
+
+.input {
+    width: 100%;
+    font-size: 1.3rem;
+    border-radius: 12px;
+    border-color: transparent;
+    padding: .5rem;
+}
+
+.input:focus {
+    outline: transparent!important;
+}
