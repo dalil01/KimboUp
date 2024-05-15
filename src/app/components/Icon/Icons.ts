@@ -1,11 +1,15 @@
 export enum Icons {
   IconDog = "icon-dog",
+  IconFlag = "icon-flag",
   IconInfo = "icon-info",
   IconKeyboard = "icon-keyboard",
   IconMedia = "icon-media",
   IconPlay = "icon-play",
   IconRankings = "icon-rankings",
+  IconSave = "icon-save",
   IconSettings = "icon-settings",
+  IconUp = "icon-up",
   IconVolumeOff = "icon-volume-off",
   IconVolumeUp = "icon-volume-up",
+  IconWallet = "icon-wallet",
 }

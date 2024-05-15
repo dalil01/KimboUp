@@ -143,7 +143,7 @@ export default function Interface() {
 			console.error(e);
 
 			if (errorRef.current) {
-				errorRef.current.textContent = "Wallet not detected. Please install a wallet to connect like Metamask.";
+				errorRef.current.textContent = "ConnectWallet not detected. Please install a wallet to connect like Metamask.";
 			}
 
 			setLoading(false);

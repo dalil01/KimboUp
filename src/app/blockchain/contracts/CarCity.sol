@@ -9,22 +9,23 @@ contract CarCity {
     }
 
     mapping(address => User) private users;
-    mapping(string => address) private addressByUsername;
 
     address[] private usersByTime;
 
-    function setUser(address _address, string memory _username, uint256 _timeMs) public {
-        if (addressByUsername[_username] != address(0)) {
-            require(addressByUsername[_username] == _address, "This username has already been taken.");
-        }
-
-        require(_timeMs <= 0, "Invalid time.");
-        require(_timeMs >= users[_address].timeMs, "This time is higher or equal than your best time.");
-
+    function setUser(address _address, string memory _username) public {
         users[_address].username = _username;
-        users[_address].timeMs = _timeMs;
+        users[_address].timeMs = 0;
+    }
 
-        addressByUsername[_username] = _address;
+    function setTime(address _address, uint256 _timeMs) public {
+        require(_timeMs > 0, "Invalid time.");
+
+        if (users[_address].timeMs == 0) {
+            users[_address].timeMs = _timeMs;
+        } else {
+            require(_timeMs < users[_address].timeMs, "New time must be lower than previous time.");
+            users[_address].timeMs = _timeMs;
+        }
 
         if (usersByTime.length == 0) {
             usersByTime.push(_address);
@@ -52,12 +53,16 @@ contract CarCity {
         }
     }
 
-    function getUser(address _user) public view returns (string memory, uint256) {
-        return (users[_user].username, users[_user].timeMs);
+    function getUser(address _address) public view returns (string memory, uint256) {
+        return (users[_address].username, users[_address].timeMs);
     }
 
-    function getUsersPaginated(uint256 _pageNumber, uint256 _itemsPerPage) public view returns (uint256[] memory, bool, bool) {
+    function getUsersPaginated(uint256 _pageNumber, uint256 _itemsPerPage) public view returns (string[] memory, uint256[] memory, bool, bool) {
         require(_pageNumber > 0, "Page number must be greater than zero");
+
+        if (_itemsPerPage > 100) {
+            _itemsPerPage = 100;
+        }
 
         uint256 startIndex = (_pageNumber - 1) * _itemsPerPage;
         uint256 endIndex = startIndex + _itemsPerPage;
@@ -66,19 +71,19 @@ contract CarCity {
             endIndex = usersByTime.length;
         }
 
-        //string[] memory usernames = new string[](endIndex - startIndex);
+        string[] memory usernames = new string[](endIndex - startIndex);
         uint256[] memory times = new uint256[](endIndex - startIndex);
 
         for (uint256 i = startIndex; i < endIndex; i++) {
             address userAddress = usersByTime[i];
-            //usernames[i - startIndex] = users[userAddress].username;
+            usernames[i - startIndex] = users[userAddress].username;
             times[i - startIndex] = users[userAddress].timeMs;
         }
 
         bool hasPrevious = _pageNumber > 1;
         bool hasNext = endIndex < usersByTime.length;
 
-        return (times, hasPrevious, hasNext);
+        return (usernames, times, hasPrevious, hasNext);
     }
 
 }

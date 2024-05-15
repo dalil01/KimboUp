@@ -32,14 +32,15 @@ export function LobbyHTML() {
 
 			<UsernameInput />
 
-			<button className={ styles.rankings  }>
+			<Link className={ styles.rankings  } href="/rankings">
 				<Icon name={ Icons.IconRankings } />
 				<span>RANKINGS</span>
-			</button>
+			</Link>
 
-			<button className={ styles.userButton }>
+			<button className={ styles.iconsButton }>
 				<Icon name={ Icons.IconDog } />
-				<p className={ styles.username } title="">AZERT jl</p>
+				<Icon name={ Icons.IconUp } />
+				<Icon name={ Icons.IconFlag } />
 			</button>
 
 			<button

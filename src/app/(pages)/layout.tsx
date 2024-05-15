@@ -4,6 +4,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 
+import { cookieToInitialState } from "wagmi";
+import { config } from '@/app/blockchain/config/Web3Config'
+import { headers } from 'next/headers'
+import Web3ModalProvider from "@/app/blockchain/context/Web3Provider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,7 +21,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
+
+    const initialState = cookieToInitialState(config, headers().get('cookie'))
+
+    return (
     <html lang="en">
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -24,7 +32,11 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet"/>
       </Head>
       <body className={ inter.className }>
-        <main className="main">{ children }</main>
+        <main className="main">
+            <Web3ModalProvider initialState={initialState}>
+                { children }
+            </Web3ModalProvider>
+        </main>
       </body>
     </html>
   );

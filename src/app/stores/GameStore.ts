@@ -11,6 +11,7 @@ export enum GameState {
 
 export type User = {
 	address: string;
+	contractUsername: string;
 	username: string;
 	time: number;
 }

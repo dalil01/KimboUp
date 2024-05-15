@@ -22,7 +22,6 @@ export default function Settings() {
 					<span>CREDITS</span>
 				</Link>
 			</div>
-			<GoToBack url="/" />
 		</div>
 	);
 }
