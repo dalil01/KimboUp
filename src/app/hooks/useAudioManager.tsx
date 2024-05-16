@@ -10,6 +10,7 @@ const AudioManagerContext = createContext<undefined | {
 	autoEnableAudio: Function
 }>(undefined);
 
+const AUDIO_LOCAL_STORAGE_KEY = "audio";
 const AUDIO_ENABLE_LOCAL_STORAGE_KEY = "audioEnable";
 
 export const AudioManagerProvider = ({ children }: any) => {
@@ -17,7 +18,7 @@ export const AudioManagerProvider = ({ children }: any) => {
 	const lastAudioPlayed = useRef(new Date().getTime());
 	const [bgAudio, setBgAudio] = useState<HTMLAudioElement>();
 
-	const [audioEnabled, setAudioEnabled] = useState((localStorage.getItem(AUDIO_ENABLE_LOCAL_STORAGE_KEY) !== "false"));
+	const [audioEnabled, setAudioEnabled] = useState(false);
 
 	useEffect(() => {
 		let audio = bgAudio as any;
@@ -56,6 +57,12 @@ export const AudioManagerProvider = ({ children }: any) => {
 	}
 
 	const autoEnableAudio = () => {
+		if (!localStorage.getItem(AUDIO_LOCAL_STORAGE_KEY)) {
+			localStorage.setItem(AUDIO_LOCAL_STORAGE_KEY, "true");
+			setAudioEnabled(true);
+			return;
+		}
+
 		if (localStorage.getItem(AUDIO_ENABLE_LOCAL_STORAGE_KEY) === "false") {
 			return;
 		}
