@@ -39,7 +39,7 @@ export const GameStore = create<GameStoreState>()(
 			startTime: 0,
 			endTime: 0,
 
-			state: GameState.LOBBY,
+			state: GameState.HOME,
 
 			setUser: (user: User) => {
 				set(() => {
