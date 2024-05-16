@@ -1,16 +1,12 @@
-import React, { Suspense, useMemo } from "react";
-import { KeyboardControls, OrbitControls, PerspectiveCamera, Preload } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import React, { useMemo } from "react";
+import { KeyboardControls, useGLTF } from "@react-three/drei";
 import { GameState, GameStore } from "@/app/stores/GameStore";
 import { LobbyCanvas } from "@/app/components/Lobby/LobbyCanvas";
 import { LobbyHTML } from "@/app/components/Lobby/LobbyHTML";
 import { Home } from "@/app/components/Home/Home";
-import Character from "@/app/components/Character/Character";
-import { Physics, RigidBody } from "@react-three/rapier";
-import Lights from "@/app/components/Lights/Lights";
-import CarCity from "@/app/components/worlds/CarCity";
-import * as THREE from "three";
-import CharacterLobby from "@/app/components/Character/CharacterLobby";
+import Game from "@/app/components/Game/Game";
+import { useLoader } from "@react-three/fiber";
+import { RGBELoader } from "three-stdlib";
 
 export enum Controls {
 	FORWARD = "forward",
@@ -19,10 +15,6 @@ export enum Controls {
 	RIGHTWARD = "rightward",
 	JUMP = "jump"
 }
-
-export const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-
-export const floor1Material = new THREE.MeshStandardMaterial({ color: "limegreen" });
 
 export default function Experience() {
 
@@ -36,50 +28,27 @@ export default function Experience() {
 
 	const state = GameStore((state: any) => state.state);
 
-	/*
-	fallback={ gameState !== GameState.LOBBY && <Loading/> }
-	 */
-
 	return (
 		<KeyboardControls map={ controlsMap }>
 			{ state === GameState.HOME && <Home/> }
 
 			{ state === GameState.LOBBY &&
                 <>
-                    <LobbyHTML/>
-                    <LobbyCanvas/>
+                    <LobbyHTML />
+                    <LobbyCanvas />
                 </>
 			}
 
-			{/*
+			{/* !(state === GameState.HOME || state === GameState.LOBBY) &&
+				<Game />
+			*/}
 
-			<Canvas
-				color="transparent"
-				shadows
-				onPointerDown={ (e: any) => {
-					if (state !== GameState.LOBBY && state !== GameState.ENDED) {
-						e.target.requestPointerLock()
-					}
-				} }>
-				<Suspense>
-					<Preload all/>
-
-					<Physics debug={ false }>
-						<Lights/>
-
-						{ state === GameState.LOBBY &&
-                            <LobbyCanvas/>
-						}
-					</Physics>
-
-							<Lights/>
-							<CarCity/>
-							<Character />
-						{<Stats />}
-				</Suspense>
-			</Canvas>
-									*/ }
+			<Game />
 
 		</KeyboardControls>
 	)
 }
+
+useGLTF.preload("/models/Character.glb", "draco/gltf/");
+useGLTF.preload("/models/CarCity.glb", "draco/gltf/");
+useLoader.preload(RGBELoader, '/textures/nebula2.hdr');

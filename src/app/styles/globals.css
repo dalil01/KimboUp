@@ -33,6 +33,7 @@ body {
     --background-color-2: rgba(237, 85, 68, 1);
     --background-color-3: rgba(248, 158, 96, 1);
     --background-color-4: #1D1D1D;
+    --background-color-5: #EE877A;
     --background-color-gradient: linear-gradient(180deg, rgba(217, 42, 33, 1) 0%, rgba(237, 85, 68, 1) 50%, rgba(248, 158, 96, 1) 100%);
     --text-white: #E7EFF3;
     --text-dark: rgba(0, 0, 0, 0.69);

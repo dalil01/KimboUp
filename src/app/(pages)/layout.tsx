@@ -8,6 +8,8 @@ import { cookieToInitialState } from "wagmi";
 import { config } from '@/app/blockchain/config/Web3Config'
 import { headers } from 'next/headers'
 import Web3ModalProvider from "@/app/blockchain/context/Web3Provider";
+import { AudioManagerProvider } from "@/app/hooks/useAudioManager";
+import React from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-    const initialState = cookieToInitialState(config, headers().get('cookie'))
+    const initialState = cookieToInitialState(config, headers().get("cookie"))
 
     return (
     <html lang="en">
@@ -33,11 +35,14 @@ export default function RootLayout({
       </Head>
       <body className={ inter.className }>
         <main className="main">
-            <Web3ModalProvider initialState={initialState}>
-                { children }
-            </Web3ModalProvider>
+            <AudioManagerProvider>
+                <Web3ModalProvider initialState={ initialState }>
+                    { children }
+                </Web3ModalProvider>
+            </AudioManagerProvider>
         </main>
       </body>
     </html>
   );
+
 }

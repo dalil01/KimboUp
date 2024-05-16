@@ -8,10 +8,13 @@ import { CarCityContractConfig } from "@/app/blockchain/config/CarCityContractCo
 import { GameStore } from "@/app/stores/GameStore";
 import { readContract } from "@wagmi/core";
 import { config } from "@/app/blockchain/config/Web3Config";
+import { useAudioManager } from "@/app/hooks/useAudioManager";
 
 export default function ConnectWallet() {
 
 	const setUser = GameStore((state: any) => state.setUser);
+
+	const { playClickAudio } = useAudioManager();
 
 	const { open } = useWeb3Modal();
 	const { isConnecting, isReconnecting, isConnected, address } = useAccount();
@@ -35,7 +38,7 @@ export default function ConnectWallet() {
 						address: address,
 						contractUsername: data[0],
 						username: data[0],
-						time: data[1]
+						time: Number(String(data[1]))
 					});
 
 					setUserRead(true);
@@ -65,6 +68,7 @@ export default function ConnectWallet() {
 
 					isConnected ? disconnectWallet() : openConnectWallet()
 				} }
+				onMouseEnter={ playClickAudio }
 			>
 				<Icon name={ Icons.IconWallet }/>
 				<span>

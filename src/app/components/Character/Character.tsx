@@ -1,33 +1,29 @@
-import { RigidBody, useRapier } from "@react-three/rapier";
+import { RigidBody } from "@react-three/rapier";
 import { useFrame } from "@react-three/fiber";
-import { useGLTF, useKeyboardControls, Text } from "@react-three/drei";
+import { useGLTF, useKeyboardControls } from "@react-three/drei";
 import { useEffect, useRef } from "react";
-import { Group, Quaternion, Vector3 } from "three";
-import { GameStore } from "@/app/stores/GameStore";
+import { Quaternion, Vector3 } from "three";
+import { GameState, GameStore, GameStoreState } from "@/app/stores/GameStore";
 import useFollowCam from "@/app/hooks/useFollowCam";
 
-type CharacterProps = {
-	gltfPath?: string;
-}
-
+const DEFAULT_POSITION = new Vector3(0, .1, 0);
 const MOVEMENT_SPEED = 1.3;
 
-let rotateAngle = new Vector3(0, 1, 0);
-let rotateQuaternion = new Quaternion();
-let impulseAxis = new Vector3(0, 1, 0);
+const rotateAngle = new Vector3(0, 1, 0);
+const rotateQuaternion = new Quaternion();
+const impulseAxis = new Vector3(0, 1, 0);
 
-export default function Character(props: CharacterProps) {
+let position = new Vector3(DEFAULT_POSITION.x, DEFAULT_POSITION.y, DEFAULT_POSITION.z);
 
-	const {
-		gltfPath = "models/yorkie.glb"
-	} = props;
+export default function Character() {
 
 	//const user: User = GameStore((state: any) => state.user);
 
-	const setCharacterBody = GameStore((state: any) => state.setCharacterBody);
-	const restartGame = GameStore((state: any) => state.restart);
+	const state = GameStore((state: GameStoreState) => state.state);
+	const setCharacterBody = GameStore((state: GameStoreState) => state.setCharacterBody);
+	const restartGame = GameStore((state: GameStoreState) => state.restart);
 
-	const { scene, materials, animations } = useGLTF(gltfPath) as any;
+	const { scene, materials, animations } = useGLTF("models/Character.glb", "draco/gltf/") as any;
 
 	const [subscribeKeys, getKeys] = useKeyboardControls();
 
@@ -41,6 +37,10 @@ export default function Character(props: CharacterProps) {
 	const textRef = useRef<any>();
 
 	useEffect(() => {
+		if (state === GameState.READY) {
+			position = new Vector3(DEFAULT_POSITION.x, DEFAULT_POSITION.y, DEFAULT_POSITION.z);
+		}
+
 		if (playerBodyRef.current) {
 			setCharacterBody(playerBodyRef.current);
 		}
@@ -52,7 +52,6 @@ export default function Character(props: CharacterProps) {
 				jump();
 			}
 		});
-
 
 		return () => {
 			unsubscribeJump();
@@ -68,12 +67,13 @@ export default function Character(props: CharacterProps) {
 		//	textRef.current.lookAt(camera.position);
 		//}
 
+		const t = playerBodyRef.current.translation();
+
 		if (document.pointerLockElement) {
 			const { forward, backward, leftward, rightward, jump } = getKeys();
 			const move = forward || backward || leftward || rightward;
 
 			if (move) {
-
 				const angleYCameraDirect = yaw.rotation.y;
 
 				// Rotate avatar
@@ -86,11 +86,14 @@ export default function Character(props: CharacterProps) {
 				impulseDirection.applyAxisAngle(impulseAxis, angleYCameraDirect);
 
 				playerBodyRef.current.applyImpulse(impulseDirection.multiplyScalar(MOVEMENT_SPEED * delta), true);
+
+				position.x = t.x;
+				position.y = t.y;
+				position.z = t.z;
 			}
 		}
 
-
-		if (playerBodyRef.current.translation().y < -1) {
+		if (t.y < -1) {
 			restartGame();
 		}
 	});
@@ -105,7 +108,6 @@ export default function Character(props: CharacterProps) {
 
 	return (
 		<>
-
 			<RigidBody
 				ref={ playerBodyRef }
 				name={ "Character" }
@@ -118,7 +120,7 @@ export default function Character(props: CharacterProps) {
 				lockRotations
 				linearDamping={ 21 }
 				gravityScale={ 1.8 }
-				position={ [0, 1, 0] }
+				position={ position }
 			>
 				{ /* user?.username &&
 					<group ref={ textRef }>
@@ -184,5 +186,3 @@ function findDirectionOffset({ forward, backward, leftward, rightward }: any): n
 
 	return directionOffset;
 }
-
-useGLTF.preload("/models/character.glb", "draco/gltf/");

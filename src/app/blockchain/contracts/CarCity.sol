@@ -9,10 +9,13 @@ contract CarCity {
     }
 
     mapping(address => User) private users;
+    mapping(string => address) private addressByUsername;
 
     address[] private usersByTime;
 
     function setUser(address _address, string memory _username) public {
+        require(addressByUsername[_username] == address(0), "This username already exists.");
+        addressByUsername[_username] = _address;
         users[_address].username = _username;
         users[_address].timeMs = 0;
     }
@@ -76,6 +79,11 @@ contract CarCity {
 
         for (uint256 i = startIndex; i < endIndex; i++) {
             address userAddress = usersByTime[i];
+
+            if (users[userAddress].timeMs > 0) {
+                continue;
+            }
+
             usernames[i - startIndex] = users[userAddress].username;
             times[i - startIndex] = users[userAddress].timeMs;
         }

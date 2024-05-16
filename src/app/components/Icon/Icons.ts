@@ -1,4 +1,5 @@
 export enum Icons {
+  IconClose = "icon-close",
   IconDog = "icon-dog",
   IconFlag = "icon-flag",
   IconInfo = "icon-info",
@@ -6,6 +7,7 @@ export enum Icons {
   IconMedia = "icon-media",
   IconPlay = "icon-play",
   IconRankings = "icon-rankings",
+  IconRestart = "icon-restart",
   IconSave = "icon-save",
   IconSettings = "icon-settings",
   IconUp = "icon-up",

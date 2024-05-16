@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 export default function CharacterLobby() {
 
-	const { scene, materials, animations } = useGLTF("models/yorkie.glb") as any;
+	const { scene, materials, animations } = useGLTF("models/CharacterLobby.glb", "draco/gltf/") as any;
 
 	const playerRef = useRef<any>();
 
@@ -19,5 +19,3 @@ export default function CharacterLobby() {
 		</group>
 	);
 }
-
-useGLTF.preload("/models/character.glb", "draco/gltf/");

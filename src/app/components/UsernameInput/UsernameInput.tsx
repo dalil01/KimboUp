@@ -13,12 +13,14 @@ export default function UsernameInput() {
 	const user: undefined | User = GameStore((state: GameStoreState) => state.user);
 	const setUser = GameStore((state: GameStoreState) => state.setUser);
 
-	const { isConnecting, isReconnecting, isConnected, address, connector  } = useAccount();
+	const { isConnecting, isReconnecting, isConnected, address, connector } = useAccount();
 
 	const [displaySave, setDisplaySave] = useState<undefined | boolean>(false);
 
 	return (
-		<form className={ styles.container }>
+		<form className={ styles.container } onSubmit={ (e) => {
+			e.preventDefault();
+		} }>
 			{
 				(isConnecting || isReconnecting) ?
 					<p className={ styles.loading }>LOADING...</p>
@@ -50,7 +52,7 @@ export default function UsernameInput() {
                                 onClick={ async (e) => {
 									e.preventDefault();
 
-									await writeContract(config,{
+									await writeContract(config, {
 										abi: CarCityContractConfig.ABI,
 										address: CarCityContractConfig.ADDRESS,
 										functionName: CarCityContractConfig.FUNCTIONS.SET_USER,
@@ -59,10 +61,12 @@ export default function UsernameInput() {
 									}).then(() => {
 										setUser({ ...user, contractUsername: user.username });
 										setDisplaySave(false);
+									}).catch((error) => {
+										console.log(error);
 									});
 								} }
                             >
-                                <Icon name={ Icons.IconSave } />
+                                <Icon name={ Icons.IconSave }/>
                             </button>
 						}
 					</>

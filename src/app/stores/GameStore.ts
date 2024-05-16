@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools, subscribeWithSelector } from "zustand/middleware";
+import { subscribeWithSelector } from "zustand/middleware";
 
 export enum GameState {
 	HOME,
@@ -35,6 +35,7 @@ export type GameStoreState = {
 export const GameStore = create<GameStoreState>()(
 	subscribeWithSelector((set) => {
 		return {
+
 			startTime: 0,
 			endTime: 0,
 
@@ -66,59 +67,44 @@ export const GameStore = create<GameStoreState>()(
 
 			lobby: () => {
 				set((state: any) => {
-					if (state.state === GameState.HOME || state.state == GameState.ENDED) {
-						return {
-							state: GameState.LOBBY,
-						};
-					}
-
-					return {};
+					return {
+						state: GameState.LOBBY,
+					};
 				});
 			},
 
 			ready: () => {
 				set((state: any) => {
-					if (state.state === GameState.LOBBY) {
-						return {
-							state: GameState.READY,
-						};
-					}
-
-					return {};
+					return {
+						state: GameState.READY,
+						startTime: 0
+					};
 				});
 			},
 
 			start: () => {
 				set((state: any) => {
-					if (state.state === GameState.READY) {
-						return {
-							state: GameState.STARTED,
-							startTime: Date.now()
-						};
-					}
-
-					return {};
+					return {
+						state: GameState.STARTED,
+						startTime: Date.now()
+					};
 				});
 			},
 
 			restart: () => {
 				set((state: any) => {
-					if (state.state !== GameState.LOBBY) {
-						if (state.characterBody) {
-							const [x, y, z] = [0, 0, 0];
-							const body = state.characterBody;
-							body.setTranslation({ x, y, z });
-							body.setLinvel({ x, y, z });
-							body.setAngvel({ x, y, z });
-							body.setRotation([0, 0, 0, 1])
-						}
-
-						return {
-							state: GameState.READY
-						};
+					if (state.characterBody) {
+						const [x, y, z] = [0, 0, 0];
+						const body = state.characterBody;
+						body.setTranslation({ x, y, z });
+						body.setLinvel({ x, y, z });
+						body.setAngvel({ x, y, z });
+						body.setRotation([0, 0, 0, 1])
 					}
 
-					return {};
+					return {
+						state: GameState.READY
+					};
 				});
 			},
 

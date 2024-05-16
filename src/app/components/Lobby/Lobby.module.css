@@ -5,34 +5,57 @@
     top: 0;
 }
 
-.logo {
+.infoContainer {
     position: absolute;
-    top: 2rem;
-    left: 1.6rem;
-    width: 16rem;
-    animation: slideTop 0.6s forwards;
-    cursor: pointer;
+    bottom: 6rem;
+    padding: .8% 1.8%;
+    border: 5px solid var(--background-color-3);
+    border-radius: 18px;
+    color: var(--text-dark);
+    background: white;
+    box-shadow: var(--box-shadow);
+    animation: slideRight 0.6s forwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
     z-index: 100;
+    pointer-events: none;
 }
 
-.settingsButton {
-    position: absolute;
-    top: 2rem;
-    right: 2.1rem;
-    font-size: 1.5rem;
-    padding: .3% .6%;
-    background: var(--background-color-2);
-    border: 3px solid var(--text-white);
-    color: var(--text-white);
-    border-radius: 10px;
-    cursor: pointer;
-    text-decoration: none;
-    animation: slideTop 0.6s forwards;
-    z-index: 100;
+.infoIcon {
+    font-size: 2.1rem;
 }
 
-.settingsButton:hover {
-    background: var(--background-color-1);
+.infoContent {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.info {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    gap: 5px;
+}
+
+.infoTitle {
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.infoSeparator {
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.infoText {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--background-color-2);
 }
 
 .rankings {
@@ -54,30 +77,6 @@
     gap: 10px;
     cursor: pointer;
     z-index: 100;
-}
-
-.iconsButton {
-    position: absolute;
-    bottom: 6rem;
-    max-width: 350px;
-    padding: 1% 1%;
-    border: 5px solid var(--background-color-3);
-    border-radius: 18px;
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--text-dark);
-    background: white;
-    box-shadow: var(--box-shadow);
-    animation: slideRight 0.6s forwards;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    z-index: 100;
-}
-
-.userLogo {
-    width: 8rem;
 }
 
 .playButton, .playButtonActive {

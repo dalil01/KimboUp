@@ -1,44 +1,73 @@
+"use client";
+
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 const AudioManagerContext = createContext<undefined | {
 	playAudio: (file: string, force: boolean) => void,
+	playClickAudio: () => void,
 	audioEnabled: boolean,
 	setAudioEnabled: Function
+	autoEnableAudio: Function
 }>(undefined);
+
+const AUDIO_ENABLE_LOCAL_STORAGE_KEY = "audioEnable";
 
 export const AudioManagerProvider = ({ children }: any) => {
 
 	const lastAudioPlayed = useRef(new Date().getTime());
-	const playAudio = (file: any, force = false) => {
-		if (!audioEnabled) {
-			return;
-		}
-		if (!force && new Date().getTime() - lastAudioPlayed.current < 100) {
-			return;
-		}
-		lastAudioPlayed.current = new Date().getTime();
-		const audio = new Audio(`/audios/${file}.mp3`);
-		audio.play();
-	};
-
-	const bgAudio = useRef(new Audio("/audios/bg.mp3"));
+	const [bgAudio, setBgAudio] = useState<HTMLAudioElement>();
 
 	const [audioEnabled, setAudioEnabled] = useState(false);
 
 	useEffect(() => {
+		let audio = bgAudio as any;
+		if (!bgAudio) {
+			audio = new Audio("/audios/background.mp3");
+			setBgAudio(audio);
+		}
+
 		if (audioEnabled) {
-			bgAudio.current.play();
-			bgAudio.current.loop = true;
+			audio.play();
+			audio.loop = true;
+			localStorage.setItem(AUDIO_ENABLE_LOCAL_STORAGE_KEY, String(true));
 		} else {
-			bgAudio.current.pause();
+			audio.pause();
+			localStorage.setItem(AUDIO_ENABLE_LOCAL_STORAGE_KEY, String(false));
 		}
 	}, [audioEnabled]);
 
+	const playAudio = (file: any, force = false) => {
+		if (!audioEnabled) {
+			return;
+		}
+
+		if (!force && new Date().getTime() - lastAudioPlayed.current < 100) {
+			return;
+		}
+
+		lastAudioPlayed.current = new Date().getTime();
+
+		const audio = new Audio(`/audios/${ file }.mp3`);
+		audio.play();
+	};
+
+	const playClickAudio = () => {
+		playAudio("click", true);
+	}
+
+	const autoEnableAudio = () => {
+		if (localStorage.getItem(AUDIO_ENABLE_LOCAL_STORAGE_KEY) === "false") {
+			return;
+		}
+
+		setAudioEnabled(true);
+	}
+
 	return (
 		<AudioManagerContext.Provider
-			value={{ playAudio, audioEnabled, setAudioEnabled }}
+			value={ { playAudio, playClickAudio, audioEnabled, setAudioEnabled, autoEnableAudio } }
 		>
-			{children}
+			{ children }
 		</AudioManagerContext.Provider>
 	);
 }

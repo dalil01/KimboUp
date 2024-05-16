@@ -2,12 +2,15 @@ import styles from "./Home.module.css";
 import { ReactSVG } from "react-svg";
 import { GameStore } from "@/app/stores/GameStore";
 import { useEffect, useRef } from "react";
+import { useAudioManager } from "@/app/hooks/useAudioManager";
 
 export function Home() {
 
 	const lobby = GameStore((state: any) => state.lobby);
 
 	const toLobbyBtnRef = useRef<any>();
+
+	const { autoEnableAudio } = useAudioManager();
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
@@ -29,6 +32,7 @@ export function Home() {
 			/>
 
 			<button ref={ toLobbyBtnRef } className={ styles.toLobbyButton } onClick={ () => {
+				autoEnableAudio();
 				lobby();
 			} }>Let's go!</button>
 

@@ -1,0 +1,80 @@
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loading {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-white);
+}
+
+.table {
+
+}
+
+.table th {
+    text-align: center;
+    padding: .6rem 1.5rem;
+    font-size: 1.2rem;
+    border-radius: 5px;
+}
+
+.table td {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: .6rem 1.5rem;
+    border-radius: 5px;
+    box-shadow: var(--box-shadow);
+}
+
+.usernameTitle, .timeTitle {
+    color: var(--text-white);
+    background: var(--background-color-4);
+}
+
+.index {
+    background: var(--background-color-2);
+    color: var(--text-white);
+}
+
+.username {
+    width: 250px;
+    background: var(--text-white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.time {
+    background: var(--background-color-2);
+    color: var(--text-white);
+}
+
+.pagination {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 10px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border-radius: 10px;
+    color: var(--text-white);
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background: var(--background-color-1);
+}
+
+.pagination button:disabled {
+    background: var(--background-color-5);
+    cursor: not-allowed;
+}

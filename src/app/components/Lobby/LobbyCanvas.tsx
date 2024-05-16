@@ -1,11 +1,17 @@
 import styles from "./Lobby.module.css";
 import React, { Suspense, useEffect, useRef } from "react";
-import Lights from "@/app/components/Lights/Lights";
+import CharacterLobbyLights from "@/app/components/Character/CharacterLobbyLights";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
 import CharacterLobby from "@/app/components/Character/CharacterLobby";
 
 export function LobbyCanvas() {
+
+	useEffect(() => {
+		return () => {
+			document.body.style.cursor = "auto";
+		}
+	}, []);
 
 	return (
 		<Canvas
@@ -29,7 +35,7 @@ export function LobbyCanvas() {
 		>
 			<Suspense>
 				<Preload all/>
-				<Lights/>
+				<CharacterLobbyLights />
 				<OrbitControls
 					makeDefault
 					enableZoom={ false }

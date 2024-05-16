@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./Rankings.module.css";
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
@@ -12,6 +14,7 @@ const itemsPerPage = 25;
 
 export default function Rankings() {
 
+	const [loading, setLoading] = useState(true);
 	const [pageNumber, setPageNumber] = useState(1);
 	const [usernames, setUsernames] = useState([]);
 	const [times, setTimes] = useState([]);
@@ -20,6 +23,8 @@ export default function Rankings() {
 
 	useEffect(() => {
 		(async () => {
+			setLoading(true);
+
 			const usersRequest = await readContract(config, {
 				abi: CarCityContractConfig.ABI,
 				address: CarCityContractConfig.ADDRESS,
@@ -32,6 +37,7 @@ export default function Rankings() {
 				setTimes(usersRequest[1]);
 				setHasPreviousPage(usersRequest[2]);
 				setHasNextPage(usersRequest[3]);
+				setLoading(false);
 			}
 		})();
 	}, [pageNumber]);
@@ -46,30 +52,39 @@ export default function Rankings() {
 
 	return (
 		<div className={ styles.container }>
-			<table>
-				<thead>
-					<tr>
-						<th>Username</th>
-						<th>Time</th>
-					</tr>
-				</thead>
-				<tbody>
-				{
-					usernames.map((username, index) => (
-							<tr key={ index }>
-								<td>{ username }</td>
-								<td>{ UTime.format(Number(String(times[index]))) }</td>
+			{
+				loading ?
+					<p className={ styles.loading }>LOADING...</p>
+					:
+					<>
+						<table className={ styles.table }>
+							<thead>
+							<tr>
+								<th></th>
+								<th className={ styles.usernameTitle }>USERNAME</th>
+								<th className={ styles.timeTitle }>TIME</th>
 							</tr>
-						))
-					}
-				</tbody>
-			</table>
+							</thead>
+							<tbody>
+							{
+								usernames.map((username, index) => (
+									<tr key={ index }>
+										<td className={ styles.index }>{ index + 1 }</td>
+										<td className={ styles.username }>{ username }</td>
+										<td className={ styles.time }>{ UTime.format(Number(String(times[index]))) }</td>
+									</tr>
+								))
+							}
+							</tbody>
+						</table>
 
-			<div>
-				<button disabled={ !hasPreviousPage } onClick={ handlePreviousPage }>Previous</button>
-				<span>Page { pageNumber }</span>
-				<button disabled={ !hasNextPage } onClick={ handleNextPage }>Next</button>
-			</div>
+						<div className={ styles.pagination }>
+							<button disabled={ !hasPreviousPage } onClick={ handlePreviousPage }>PREVIOUS</button>
+							<span>PAGE { pageNumber }</span>
+							<button disabled={ !hasNextPage } onClick={ handleNextPage }>NEXT</button>
+						</div>
+					</>
+			}
 		</div>
 	);
 }

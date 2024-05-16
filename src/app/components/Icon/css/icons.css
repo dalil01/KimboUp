@@ -1,10 +1,10 @@
 @font-face {
 font-family: "icons";
-src: url("../fonts/icons.eot?0fe6ce4f0dd1502b7943c0ee64a1b46f#iefix") format("embedded-opentype"),
-url("../fonts/icons.svg?0fe6ce4f0dd1502b7943c0ee64a1b46f#icons") format("svg"),
-url("../fonts/icons.ttf?0fe6ce4f0dd1502b7943c0ee64a1b46f") format("truetype"),
-url("../fonts/icons.woff?0fe6ce4f0dd1502b7943c0ee64a1b46f") format("woff"),
-url("../fonts/icons.woff2?0fe6ce4f0dd1502b7943c0ee64a1b46f") format("woff2");
+src: url("../fonts/icons.eot?ae808ca0dae8f01332aaba2c2e31b297#iefix") format("embedded-opentype"),
+url("../fonts/icons.svg?ae808ca0dae8f01332aaba2c2e31b297#icons") format("svg"),
+url("../fonts/icons.ttf?ae808ca0dae8f01332aaba2c2e31b297") format("truetype"),
+url("../fonts/icons.woff?ae808ca0dae8f01332aaba2c2e31b297") format("woff"),
+url("../fonts/icons.woff2?ae808ca0dae8f01332aaba2c2e31b297") format("woff2");
 }
 
     i[class^="icon-"]:before, i[class*=" icon-"]:before {
@@ -18,42 +18,48 @@ line-height: 1;
 -moz-osx-font-smoothing: grayscale;
 }
 
-        .icon-dog:before {
+        .icon-close:before {
     content: "\f101";
     }
-        .icon-flag:before {
+        .icon-dog:before {
     content: "\f102";
     }
-        .icon-info:before {
+        .icon-flag:before {
     content: "\f103";
     }
-        .icon-keyboard:before {
+        .icon-info:before {
     content: "\f104";
     }
-        .icon-media:before {
+        .icon-keyboard:before {
     content: "\f105";
     }
-        .icon-play:before {
+        .icon-media:before {
     content: "\f106";
     }
-        .icon-rankings:before {
+        .icon-play:before {
     content: "\f107";
     }
-        .icon-save:before {
+        .icon-rankings:before {
     content: "\f108";
     }
-        .icon-settings:before {
+        .icon-restart:before {
     content: "\f109";
     }
-        .icon-up:before {
+        .icon-save:before {
     content: "\f10a";
     }
-        .icon-volume-off:before {
+        .icon-settings:before {
     content: "\f10b";
     }
-        .icon-volume-up:before {
+        .icon-up:before {
     content: "\f10c";
     }
-        .icon-wallet:before {
+        .icon-volume-off:before {
     content: "\f10d";
+    }
+        .icon-volume-up:before {
+    content: "\f10e";
+    }
+        .icon-wallet:before {
+    content: "\f10f";
     }
