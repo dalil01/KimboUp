@@ -47,6 +47,5 @@ export default function Experience() {
 }
 
 useGLTF.preload("/models/Character.glb", "draco/gltf/");
-useGLTF.preload("/models/CharacterLobby.glb", "draco/gltf/");
 useGLTF.preload("/models/CarCity.glb", "draco/gltf/");
 useLoader.preload(RGBELoader, '/textures/nebula2.hdr');

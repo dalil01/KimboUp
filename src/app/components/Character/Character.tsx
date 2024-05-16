@@ -6,7 +6,7 @@ import { Quaternion, Vector3 } from "three";
 import { GameState, GameStore, GameStoreState } from "@/app/stores/GameStore";
 import useFollowCam from "@/app/hooks/useFollowCam";
 
-const DEFAULT_POSITION = new Vector3(0, .1, 0);
+const DEFAULT_POSITION = new Vector3(0, .5, 0);
 const MOVEMENT_SPEED = 1.3;
 
 const rotateAngle = new Vector3(0, 1, 0);

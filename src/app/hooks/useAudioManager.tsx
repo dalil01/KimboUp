@@ -17,7 +17,7 @@ export const AudioManagerProvider = ({ children }: any) => {
 	const lastAudioPlayed = useRef(new Date().getTime());
 	const [bgAudio, setBgAudio] = useState<HTMLAudioElement>();
 
-	const [audioEnabled, setAudioEnabled] = useState(false);
+	const [audioEnabled, setAudioEnabled] = useState((localStorage.getItem(AUDIO_ENABLE_LOCAL_STORAGE_KEY) !== "false"));
 
 	useEffect(() => {
 		let audio = bgAudio as any;

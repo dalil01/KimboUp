@@ -1,11 +1,9 @@
 import { Environment, useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { GameStore, GameStoreState } from "@/app/stores/GameStore";
 import CarCityLights from "@/app/components/CarCity/CarCityLights";
 import { Object3D, Object3DEventMap } from "three";
-import { RGBELoader } from "three-stdlib";
-import { useLoader } from "@react-three/fiber";
 
 type SquareParkProps = {}
 

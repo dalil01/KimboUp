@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 export default function CharacterLobby() {
 
-	const { scene, materials, animations } = useGLTF("models/CharacterLobby.glb", "draco/gltf/") as any;
+	const { scene, materials, animations } = useGLTF("models/Character.glb", "draco/gltf/") as any;
 
 	const playerRef = useRef<any>();
 
