@@ -24,16 +24,18 @@ export default function Game() {
 
 	const { playClickAudio } = useAudioManager();
 
-	return (
-		<div className={ styles.container }
-			 style={
+	/*
+	style={
 				 {
 					 visibility:
 						 (state === GameState.HOME || state === GameState.LOBBY)
 							 ? "hidden" : "visible"
 				 }
 			 }
-		>
+	 */
+
+	return (
+		<div className={ styles.container }>
 			<Logo/>
 
 			<button className={ styles.restartButton }

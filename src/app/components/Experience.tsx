@@ -39,16 +39,14 @@ export default function Experience() {
                 </>
 			}
 
-			{/* !(state === GameState.HOME || state === GameState.LOBBY) &&
+			{ !(state === GameState.HOME || state === GameState.LOBBY) &&
 				<Game />
-			*/}
-
-			<Game />
-
+			}
 		</KeyboardControls>
 	)
 }
 
 useGLTF.preload("/models/Character.glb", "draco/gltf/");
+useGLTF.preload("/models/CharacterLobby.glb", "draco/gltf/");
 useGLTF.preload("/models/CarCity.glb", "draco/gltf/");
 useLoader.preload(RGBELoader, '/textures/nebula2.hdr');
