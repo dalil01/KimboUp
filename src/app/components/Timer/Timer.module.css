@@ -6,7 +6,7 @@
     width: max-content;
     padding: 5px 0;
     text-align: center;
-    z-index: 100;
+    z-index: 10;
     pointer-events: none;
 }
 

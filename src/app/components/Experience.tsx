@@ -5,8 +5,9 @@ import { LobbyCanvas } from "@/app/components/Lobby/LobbyCanvas";
 import { LobbyHTML } from "@/app/components/Lobby/LobbyHTML";
 import { Home } from "@/app/components/Home/Home";
 import Game from "@/app/components/Game/Game";
-import { useLoader } from "@react-three/fiber";
+import { Canvas, useLoader } from "@react-three/fiber";
 import { RGBELoader } from "three-stdlib";
+import Loading from "@/app/components/Loading/Loading";
 
 export enum Controls {
 	FORWARD = "forward",

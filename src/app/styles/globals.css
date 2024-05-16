@@ -54,3 +54,7 @@ body {
 ::-webkit-scrollbar-track:hover {
     background-color: var(--background-color-1);
 }
+
+button:focus {
+    outline: none;
+}

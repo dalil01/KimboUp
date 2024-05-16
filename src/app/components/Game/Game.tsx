@@ -2,7 +2,7 @@ import styles from "./Game.module.css";
 
 import { Canvas, useLoader } from "@react-three/fiber";
 import { GameState, GameStore, GameStoreState } from "@/app/stores/GameStore";
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import Loading from "@/app/components/Loading/Loading";
 import { Preload, useGLTF } from "@react-three/drei";
 import { Physics } from "@react-three/rapier";
@@ -72,12 +72,12 @@ export default function Game() {
 					}
 				} }
 			>
-				<Suspense fallback={ <Loading/> }>
-					<Preload all/>
+				<Suspense fallback={ <Loading /> }>
+					<Preload all />
 
 					<Physics debug={ false }>
-						<Character/>
-						<CarCity/>
+						<Character />
+						<CarCity />
 					</Physics>
 
 					{/* <Stats /> */ }

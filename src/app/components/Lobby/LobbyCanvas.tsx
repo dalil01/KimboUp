@@ -4,6 +4,7 @@ import CharacterLobbyLights from "@/app/components/Character/CharacterLobbyLight
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
 import CharacterLobby from "@/app/components/Character/CharacterLobby";
+import Loading from "@/app/components/Loading/Loading";
 
 export function LobbyCanvas() {
 
