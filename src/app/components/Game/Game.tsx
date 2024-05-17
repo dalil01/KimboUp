@@ -38,6 +38,12 @@ export default function Game() {
 		<div className={ styles.container }>
 			<Logo/>
 
+			<Timer/>
+
+			<SettingsButton
+				right={ "10rem" }
+			/>
+
 			<button className={ styles.restartButton }
 					onClick={ () => {
 						restartGame();
@@ -46,12 +52,6 @@ export default function Game() {
 			>
 				<Icon name={ Icons.IconRestart }/>
 			</button>
-
-			<Timer/>
-
-			<SettingsButton
-				right={ "6rem" }
-			/>
 
 			<button className={ styles.closeButton }
 					onClick={ () => {
@@ -72,12 +72,12 @@ export default function Game() {
 					}
 				} }
 			>
-				<Suspense fallback={ <Loading /> }>
-					<Preload all />
+				<Suspense fallback={ <Loading/> }>
+					<Preload all/>
 
 					<Physics debug={ false }>
-						<Character />
-						<CarCity />
+						<Character/>
+						<CarCity/>
 					</Physics>
 
 					{/* <Stats /> */ }
