@@ -57,10 +57,12 @@ export const GameStore = create<GameStoreState>()(
 						return {};
 					}
 
+					const time = (!state.user.time || state.user.currentTime < state.user.time) ? state.user.currentTime : state.user.time;
+
 					return {
 						user: {
 							...state.user,
-							time: state.user.currentTime
+							time
 						}
 					};
 				});

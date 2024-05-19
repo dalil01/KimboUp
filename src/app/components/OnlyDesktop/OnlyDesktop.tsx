@@ -32,7 +32,7 @@ export function OnlyDesktop() {
 				src={ "/svg/logo.svg" }
 			/>
 
-			<p ref={ textRef } className={ styles.text }>$KIMBOUP IS CURRENTLY ONLY AVAILABLE ON DESKTOP&nbsp;!</p>
+			<p ref={ textRef } className={ styles.text }>$KIMBO UP IS CURRENTLY ONLY AVAILABLE ON DESKTOP&nbsp;!</p>
 
 			<Copy />
 		</div>
