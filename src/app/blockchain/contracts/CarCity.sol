@@ -18,6 +18,7 @@ contract CarCity {
         addressByUsername[_username] = _address;
         users[_address].username = _username;
         users[_address].timeMs = 0;
+        userAddressByTime.push(_address);
     }
 
     function setTime(address _address, uint256 _timeMs) public {
@@ -65,15 +66,15 @@ contract CarCity {
         string[] memory usernames = new string[](endIndex - startIndex);
         uint256[] memory times = new uint256[](endIndex - startIndex);
 
+        uint256 index = 0;
         for (uint256 i = startIndex; i < endIndex; i++) {
-            address userAddress = userAddressByTime[i];
-
-            if (users[userAddress].timeMs == 0) {
-                continue;
+            User memory user = users[userAddressByTime[i]];
+            if (user.timeMs > 0) {
+                usernames[index] = user.username;
+                times[index] = user.timeMs;
             }
 
-            usernames[i - startIndex] = users[userAddress].username;
-            times[i - startIndex] = users[userAddress].timeMs;
+            index++;
         }
 
         bool hasPrevious = _pageNumber > 1;

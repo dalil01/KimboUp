@@ -42,7 +42,7 @@ export default function EndGameModal() {
 		}).then(() => {
 			// Nothing to do.
 		}).catch((error) => {
-			console.log(error);
+			console.error(error);
 		}).finally(() => {
 			setSaved(true);
 		});
