@@ -14,11 +14,13 @@ export type User = {
 	contractUsername: string;
 	username: string;
 	time: number;
+	currentTime?: number;
 }
 
 export type GameStoreState = {
 	user?: User;
 	setUser: (user: User) => void;
+	autoSetTimeAsCurrentTime: () => void;
 	characterBody?: undefined | any;
 	setCharacterBody: (characterBody: any) => void;
 	startTime: number;
@@ -45,6 +47,21 @@ export const GameStore = create<GameStoreState>()(
 				set(() => {
 					return {
 						user: user
+					};
+				});
+			},
+
+			autoSetTimeAsCurrentTime: () => {
+				set((state) => {
+					if (!state.user?.currentTime) {
+						return {};
+					}
+
+					return {
+						user: {
+							...state.user,
+							time: state.user.currentTime
+						}
 					};
 				});
 			},
@@ -115,9 +132,16 @@ export const GameStore = create<GameStoreState>()(
 							document.exitPointerLock();
 						}
 
+						const endTime = Date.now();
+						const time = endTime - state.startTime;
+
 						return {
 							state: GameState.ENDED,
-							endTime: Date.now()
+							endTime: endTime,
+							user: {
+								...state.user,
+								currentTime: time
+							}
 						};
 					}
 

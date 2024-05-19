@@ -25,15 +25,18 @@ export const AudioManagerProvider = ({ children }: any) => {
 		if (!bgAudio) {
 			audio = new Audio("/audios/background.mp3");
 			setBgAudio(audio);
+			return;
 		}
 
 		if (audioEnabled) {
 			audio.play();
 			audio.loop = true;
-			localStorage.setItem(AUDIO_ENABLE_LOCAL_STORAGE_KEY, String(true));
 		} else {
 			audio.pause();
-			localStorage.setItem(AUDIO_ENABLE_LOCAL_STORAGE_KEY, String(false));
+		}
+
+		if (localStorage.getItem(AUDIO_LOCAL_STORAGE_KEY)) {
+			localStorage.setItem(AUDIO_ENABLE_LOCAL_STORAGE_KEY, String(audioEnabled));
 		}
 	}, [audioEnabled]);
 

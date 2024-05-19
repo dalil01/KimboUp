@@ -47,7 +47,7 @@ export function LobbyCanvas() {
 					minPolarAngle={ 1 }
 					maxPolarAngle={ Math.PI / 2 - 0.1 }
 				/>
-				<CharacterLobby/>
+				<CharacterLobby />
 			</Suspense>
 		</Canvas>
 	)

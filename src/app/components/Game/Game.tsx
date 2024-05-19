@@ -1,10 +1,10 @@
 import styles from "./Game.module.css";
 
-import { Canvas, useLoader } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { GameState, GameStore, GameStoreState } from "@/app/stores/GameStore";
-import React, { Suspense, lazy } from "react";
+import React, { Suspense } from "react";
 import Loading from "@/app/components/Loading/Loading";
-import { Preload, useGLTF } from "@react-three/drei";
+import { Preload } from "@react-three/drei";
 import { Physics } from "@react-three/rapier";
 import CarCity from "@/app/components/CarCity/CarCity";
 import Character from "@/app/components/Character/Character";
@@ -12,9 +12,9 @@ import SettingsButton from "@/app/components/Settings/SettingsButton";
 import Icon from "@/app/components/Icon/Icon";
 import { Icons } from "@/app/components/Icon/Icons";
 import Logo from "@/app/components/Logo/Logo";
-import { RGBELoader } from "three-stdlib";
 import { useAudioManager } from "@/app/hooks/useAudioManager";
 import Timer from "@/app/components/Timer/Timer";
+import EndGameModal from "@/app/components/EndGameModal/EndGameModal";
 
 export default function Game() {
 
@@ -38,7 +38,12 @@ export default function Game() {
 		<div className={ styles.container }>
 			<Logo/>
 
-			<Timer/>
+			{ state === GameState.ENDED
+				?
+				<EndGameModal />
+				:
+				<Timer />
+			}
 
 			<SettingsButton
 				right={ "10rem" }

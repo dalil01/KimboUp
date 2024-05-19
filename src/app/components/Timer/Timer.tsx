@@ -2,6 +2,7 @@ import styles from "./Timer.module.css";
 import { useEffect, useRef } from "react";
 import { GameState, GameStore, GameStoreState } from "@/app/stores/GameStore";
 import { addEffect } from "@react-three/fiber";
+import { UTime } from "@/app/utils/UTime";
 
 export default function Timer() {
 
@@ -13,19 +14,13 @@ export default function Timer() {
 
 			let elapsedTime = 0;
 
-
 			if (gameStoreState.state === GameState.STARTED) {
 				elapsedTime = Date.now() - gameStoreState.startTime;
 			} else if (gameStoreState.state == GameState.ENDED) {
 				elapsedTime = gameStoreState.endTime - gameStoreState.startTime;
 			}
 
-			elapsedTime /= 1000;
-
-			const minutes = Math.floor(elapsedTime / 60);
-			const seconds = Math.floor(elapsedTime % 60);
-
-			const formattedTime = `${ minutes.toString().padStart(2, '0') }:${ seconds.toString().padStart(2, '0') }`;
+			const formattedTime = UTime.format(elapsedTime);
 
 			if (timeElementRef.current) {
 				timeElementRef.current.textContent = formattedTime;

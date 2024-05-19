@@ -16,6 +16,7 @@ export default function UsernameInput() {
 	const { isConnecting, isReconnecting, isConnected, address, connector } = useAccount();
 
 	const [displaySave, setDisplaySave] = useState<undefined | boolean>(false);
+	const [errorMessage, setErrorMessage] = useState<string>('');
 
 	return (
 		<form className={ styles.container } onSubmit={ (e) => {
@@ -33,6 +34,8 @@ export default function UsernameInput() {
 							defaultValue={ user?.username || '' }
 							onChange={
 								(e) => {
+									setErrorMessage('');
+
 									let newUser: any = {};
 									if (user) {
 										newUser = { ...user };
@@ -62,12 +65,23 @@ export default function UsernameInput() {
 										setUser({ ...user, contractUsername: user.username });
 										setDisplaySave(false);
 									}).catch((error) => {
-										console.log(error);
+										if (error.message) {
+											const userNameAlreadyExists = "This username already exists"
+											if (error.message.includes(userNameAlreadyExists)) {
+												setErrorMessage(userNameAlreadyExists);
+											}
+										}
+
+										console.error(error);
 									});
 								} }
                             >
                                 <Icon name={ Icons.IconSave }/>
                             </button>
+						}
+
+						{ errorMessage &&
+							<p className={ styles.errorMessage }>{ errorMessage }</p>
 						}
 					</>
 			}

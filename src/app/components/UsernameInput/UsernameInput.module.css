@@ -44,3 +44,18 @@
 .saveButton:hover {
     background-color: var(--background-color-1);
 }
+
+.errorMessage {
+    position: absolute;
+    top: 130%;
+    left: 0;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 15px 0;
+    text-align: center;
+    border-radius: 8px;
+    color: var(--text-white);
+    background-color: var(--background-color-2);
+}

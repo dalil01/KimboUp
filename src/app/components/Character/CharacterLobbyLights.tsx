@@ -8,7 +8,9 @@ export default function CharacterLobbyLights() {
 	const directionalLightRef = useRef<any>();
 	const ambientLightRef = useRef<any>();
 
+	/*
 	useHelper(directionalLightRef, DirectionalLightHelper, 1, "red")
+	 */
 
 	useFrame((state) => {
 		// const directionalLight = directionalLightRef.current;

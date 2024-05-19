@@ -80,7 +80,7 @@ contract CarCity {
         for (uint256 i = startIndex; i < endIndex; i++) {
             address userAddress = usersByTime[i];
 
-            if (users[userAddress].timeMs > 0) {
+            if (users[userAddress].timeMs == 0) {
                 continue;
             }
 

@@ -30,7 +30,7 @@
     box-shadow: var(--box-shadow);
 }
 
-.usernameTitle, .timeTitle {
+.usernameTitle, .timeIcon {
     color: var(--text-white);
     background: var(--background-color-4);
 }

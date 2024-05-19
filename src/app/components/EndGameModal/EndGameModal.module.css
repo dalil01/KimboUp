@@ -1,0 +1,116 @@
+.background {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, .6);
+    z-index: 100;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    max-height: 50%;
+    padding: 3%;
+    border: 5px solid var(--background-color-3);
+    border-radius: 18px;
+    color: var(--text-dark);
+    background: white;
+    box-shadow: var(--box-shadow);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.content {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.timeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dark);
+    width: 100%;
+}
+
+.timeText {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.newBestTime {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.saveToKimbonet {
+    border: 3px solid var(--text-white);
+    border-radius: 10px;
+    padding: 4% 6%;
+    font-size: .8rem;
+    font-weight: 900;
+    color: var(--text-white);
+    background: var(--background-color-2);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.saveToKimbonet:hover {
+    background: var(--background-color-1);
+}
+
+.separator {
+    margin-top: 30px;
+    width: 100%;
+    height: 1px;
+    background: var(--background-color-3);
+}
+
+.footer {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.footerButton {
+    font-size: .8rem;
+    font-weight: 600;
+    padding: 3% 6%;
+    border-radius: 10px;
+    border: 3px solid var(--text-white);
+    color: var(--text-white);
+    background: var(--background-color-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.footerButton:hover {
+    background: var(--background-color-1);
+}

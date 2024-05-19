@@ -56,7 +56,7 @@ export default function CarCity(props: SquareParkProps) {
 		<>
 			<CarCityLights/>
 
-			<Environment files="/hdrs/HDR_multi_nebulae2.hdr" background />
+			<Environment files="/hdrs/HDR_multi_nebulae.hdr" background />
 
 			<group position={ [0, 0, 0] }>
 				{ startStartPlatform &&
@@ -66,7 +66,7 @@ export default function CarCity(props: SquareParkProps) {
                         onCollisionEnter={ (e) => {
 							// @ts-ignore
 							if (e.other.rigidBodyObject.name === "Character") {
-								startGame()
+								startGame();
 							}
 						} }
                     >

@@ -1,4 +1,5 @@
 export enum Icons {
+  IconClock = "icon-clock",
   IconClose = "icon-close",
   IconDog = "icon-dog",
   IconFlag = "icon-flag",

@@ -33,6 +33,7 @@ export default function Rankings() {
 			});
 
 			if ((usersRequest instanceof Array) && usersRequest.length == 4) {
+				console.log(usersRequest)
 				setUsernames(usersRequest[0]);
 				setTimes(usersRequest[1]);
 				setHasPreviousPage(usersRequest[2]);
