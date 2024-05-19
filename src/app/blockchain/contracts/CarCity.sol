@@ -11,7 +11,7 @@ contract CarCity {
     mapping(address => User) private users;
     mapping(string => address) private addressByUsername;
 
-    address[] private usersByTime;
+    address[] private userAddressByTime;
 
     function setUser(address _address, string memory _username) public {
         require(addressByUsername[_username] == address(0), "This username already exists.");
@@ -30,28 +30,16 @@ contract CarCity {
             users[_address].timeMs = _timeMs;
         }
 
-        if (usersByTime.length == 0) {
-            usersByTime.push(_address);
-        } else {
-            bool inserted = false;
+        sortUserAddressByTime();
+    }
 
-            for (uint256 i = 0; i < usersByTime.length; i++) {
-                if (users[usersByTime[i]].timeMs > _timeMs) {
-                    usersByTime.push(address(0));
-
-                    for (uint256 j = usersByTime.length - 1; j > i; j--) {
-                        usersByTime[j] = usersByTime[j - 1];
-                    }
-
-                    usersByTime[i] = _address;
-                    inserted = true;
-
-                    break;
+    function sortUserAddressByTime() private {
+        uint256 length = userAddressByTime.length;
+        for (uint256 i = 0; i < length - 1; i++) {
+            for (uint256 j = 0; j < length - i - 1; j++) {
+                if (users[userAddressByTime[j]].timeMs > users[userAddressByTime[j + 1]].timeMs) {
+                    (userAddressByTime[j], userAddressByTime[j + 1]) = (userAddressByTime[j + 1], userAddressByTime[j]);
                 }
-            }
-
-            if (!inserted) {
-                usersByTime.push(_address);
             }
         }
     }
@@ -70,15 +58,15 @@ contract CarCity {
         uint256 startIndex = (_pageNumber - 1) * _itemsPerPage;
         uint256 endIndex = startIndex + _itemsPerPage;
 
-        if (endIndex > usersByTime.length) {
-            endIndex = usersByTime.length;
+        if (endIndex > userAddressByTime.length) {
+            endIndex = userAddressByTime.length;
         }
 
         string[] memory usernames = new string[](endIndex - startIndex);
         uint256[] memory times = new uint256[](endIndex - startIndex);
 
         for (uint256 i = startIndex; i < endIndex; i++) {
-            address userAddress = usersByTime[i];
+            address userAddress = userAddressByTime[i];
 
             if (users[userAddress].timeMs == 0) {
                 continue;
@@ -89,7 +77,7 @@ contract CarCity {
         }
 
         bool hasPrevious = _pageNumber > 1;
-        bool hasNext = endIndex < usersByTime.length;
+        bool hasNext = endIndex < userAddressByTime.length;
 
         return (usernames, times, hasPrevious, hasNext);
     }
