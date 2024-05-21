@@ -2,7 +2,7 @@ import styles from "./EndGameModal.module.css";
 import Icon from "@/app/components/Icon/Icon";
 import { Icons } from "@/app/components/Icon/Icons";
 import { UTime } from "@/app/utils/UTime";
-import { GameStore, GameStoreState, User } from "@/app/stores/GameStore";
+import { GameStore, GameStoreState } from "@/app/stores/GameStore";
 import { useEffect, useState } from "react";
 import { useAudioManager } from "@/app/hooks/useAudioManager";
 import { useAccount } from "wagmi";
@@ -12,10 +12,12 @@ import { CarCityConfig } from "@/app/blockchain/config/CarCity.config";
 
 export default function EndGameModal() {
 
-	const user: undefined | User = GameStore((state: GameStoreState) => state.user);
-	const lobby = GameStore((state: GameStoreState) => state.lobby);
-	const restartGame = GameStore((state: GameStoreState) => state.restart);
-	const autoSetTimeAsCurrentTime = GameStore((state: GameStoreState) => state.autoSetTimeAsCurrentTime);
+	const { user, lobby, restart, autoSetTimeAsCurrentTime } = GameStore((state: GameStoreState) => ({
+		user: state.user,
+		lobby: state.lobby,
+		restart: state.restart,
+		autoSetTimeAsCurrentTime: state.autoSetTimeAsCurrentTime
+	}));
 
 	const { isConnected, address, connector } = useAccount();
 	const [saved, setSaved] = useState(false);
@@ -83,7 +85,7 @@ export default function EndGameModal() {
 					<button
 						className={ styles.footerButton }
 						onClick={ () => {
-							restartGame();
+							restart();
 						} }
 						onMouseEnter={ playHoverButtonAudio }
 					>
@@ -94,7 +96,7 @@ export default function EndGameModal() {
 					<button
 						className={ styles.footerButton }
 						onClick={ () => {
-							restartGame();
+							restart();
 							lobby();
 						} }
 						onMouseEnter={ playHoverButtonAudio }
