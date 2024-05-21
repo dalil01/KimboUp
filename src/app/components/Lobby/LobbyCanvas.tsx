@@ -1,12 +1,15 @@
 import styles from "./Lobby.module.css";
+
 import React, { Suspense, useEffect, useRef } from "react";
-import CharacterLobbyLights from "@/app/components/Character/CharacterLobbyLights";
+
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
-import CharacterLobby from "@/app/components/Character/CharacterLobby";
-import Loading from "@/app/components/Loading/Loading";
+import { GameStore, GameStoreState } from "@/app/stores/GameStore";
+import { CharacterFactory } from "@/app/components/characters/CharacterFactory";
 
 export function LobbyCanvas() {
+
+	const currentConfig = GameStore((state: GameStoreState) => state.currentConfig);
 
 	useEffect(() => {
 		return () => {
@@ -36,7 +39,7 @@ export function LobbyCanvas() {
 		>
 			<Suspense>
 				<Preload all/>
-				<CharacterLobbyLights />
+
 				<OrbitControls
 					makeDefault
 					enableZoom={ false }
@@ -47,7 +50,8 @@ export function LobbyCanvas() {
 					minPolarAngle={ 1 }
 					maxPolarAngle={ Math.PI / 2 - 0.1 }
 				/>
-				<CharacterLobby />
+
+				{ CharacterFactory.create(currentConfig.character.lobby.name, currentConfig.character.lobby.props) }
 			</Suspense>
 		</Canvas>
 	)

@@ -10,7 +10,7 @@ import { Routes } from "@/app/vars/Routes";
 
 export default function Settings() {
 
-	const { audioEnabled, setAudioEnabled , playClickAudio } = useAudioManager();
+	const { audioEnabled, setAudioEnabled , playHoverButtonAudio } = useAudioManager();
 
 	return (
 		<div className={ styles.container }>
@@ -20,16 +20,16 @@ export default function Settings() {
 					onClick={ () => {
 						setAudioEnabled(!audioEnabled);
 					} }
-					onMouseEnter={ playClickAudio }
+					onMouseEnter={ playHoverButtonAudio }
 				>
 					<Icon name={ audioEnabled ? Icons.IconVolumeUp : Icons.IconVolumeOff } />
 					<span>AUDIO</span>
 				</button>
-				<Link className={ styles.item } href={ Routes.HOW_TO_PLAY } onMouseEnter={ playClickAudio }>
+				<Link className={ styles.item } href={ Routes.HOW_TO_PLAY } onMouseEnter={ playHoverButtonAudio }>
 					<Icon name={ Icons.IconInfo } />
 					<span>HOW TO PLAY</span>
 				</Link>
-				<Link className={ styles.item } href={ Routes.CREDITS } onMouseEnter={ playClickAudio }>
+				<Link className={ styles.item } href={ Routes.CREDITS } onMouseEnter={ playHoverButtonAudio }>
 					<Icon name={ Icons.IconMedia } />
 					<span>CREDITS</span>
 				</Link>

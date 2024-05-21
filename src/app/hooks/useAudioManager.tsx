@@ -1,10 +1,11 @@
 "use client";
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { Files } from "@/app/vars/Files";
 
 const AudioManagerContext = createContext<undefined | {
 	playAudio: (file: string, force: boolean) => void,
-	playClickAudio: () => void,
+	playHoverButtonAudio: () => void,
 	audioEnabled: boolean,
 	setAudioEnabled: Function
 	autoEnableAudio: Function
@@ -23,7 +24,7 @@ export const AudioManagerProvider = ({ children }: any) => {
 	useEffect(() => {
 		let audio = bgAudio as any;
 		if (!bgAudio) {
-			audio = new Audio("/audios/background.mp3");
+			audio = new Audio(Files.AUDIOS.BACKGROUND);
 			setBgAudio(audio);
 			return;
 		}
@@ -40,7 +41,7 @@ export const AudioManagerProvider = ({ children }: any) => {
 		}
 	}, [audioEnabled]);
 
-	const playAudio = (file: any, force = false) => {
+	const playAudio = (file: string, force = false) => {
 		if (!audioEnabled) {
 			return;
 		}
@@ -51,12 +52,12 @@ export const AudioManagerProvider = ({ children }: any) => {
 
 		lastAudioPlayed.current = new Date().getTime();
 
-		const audio = new Audio(`/audios/${ file }.mp3`);
+		const audio = new Audio(file);
 		audio.play();
 	};
 
-	const playClickAudio = () => {
-		playAudio("click", true);
+	const playHoverButtonAudio = () => {
+		playAudio(Files.AUDIOS.HOVER_BUTTON, true);
 	}
 
 	const autoEnableAudio = () => {
@@ -75,7 +76,7 @@ export const AudioManagerProvider = ({ children }: any) => {
 
 	return (
 		<AudioManagerContext.Provider
-			value={ { playAudio, playClickAudio, audioEnabled, setAudioEnabled, autoEnableAudio } }
+			value={ { playAudio, playHoverButtonAudio, audioEnabled, setAudioEnabled, autoEnableAudio } }
 		>
 			{ children }
 		</AudioManagerContext.Provider>

@@ -1,5 +1,10 @@
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
+import { GameConfig } from "@/app/types/GameConfig";
+import { User } from "@/app/types/User";
+import { Characters } from "@/app/components/characters/Characters";
+import { Maps } from "@/app/components/maps/Maps";
+import { CarCityConfig } from "@/app/blockchain/config/CarCity.config";
 
 export enum GameState {
 	HOME,
@@ -9,15 +14,8 @@ export enum GameState {
 	ENDED
 }
 
-export type User = {
-	address: string;
-	contractUsername: string;
-	username: string;
-	time: number;
-	currentTime?: number;
-}
-
 export type GameStoreState = {
+	currentConfig: GameConfig;
 	user?: User;
 	setUser: (user: User) => void;
 	autoSetTimeAsCurrentTime: () => void;
@@ -37,6 +35,24 @@ export type GameStoreState = {
 export const GameStore = create<GameStoreState>()(
 	subscribeWithSelector((set) => {
 		return {
+			currentConfig: {
+				character: {
+					main: {
+						name: Characters.ASTRO_YORKIE,
+					},
+					lobby: {
+						name: Characters.ASTRO_YORKIE_LOBBY
+					}
+				},
+				map: {
+					name: Maps.CAR_CITY,
+					contract: {
+						address: CarCityConfig.ADDRESS,
+						abi: CarCityConfig.ABI,
+						functions: CarCityConfig.FUNCTIONS
+					}
+				}
+			},
 
 			startTime: 0,
 			endTime: 0,
@@ -52,7 +68,7 @@ export const GameStore = create<GameStoreState>()(
 			},
 
 			autoSetTimeAsCurrentTime: () => {
-				set((state) => {
+				set((state: GameStoreState) => {
 					if (!state.user?.currentTime) {
 						return {};
 					}
@@ -77,7 +93,7 @@ export const GameStore = create<GameStoreState>()(
 			},
 
 			home: () => {
-				set((state: any) => {
+				set(() => {
 					return {
 						state: GameState.HOME,
 					};
@@ -85,7 +101,7 @@ export const GameStore = create<GameStoreState>()(
 			},
 
 			lobby: () => {
-				set((state: any) => {
+				set(() => {
 					return {
 						state: GameState.LOBBY,
 					};
@@ -93,7 +109,7 @@ export const GameStore = create<GameStoreState>()(
 			},
 
 			ready: () => {
-				set((state: any) => {
+				set(() => {
 					return {
 						state: GameState.READY,
 						startTime: 0
@@ -102,7 +118,7 @@ export const GameStore = create<GameStoreState>()(
 			},
 
 			start: () => {
-				set((state: any) => {
+				set(() => {
 					return {
 						state: GameState.STARTED,
 						startTime: Date.now()
@@ -111,7 +127,7 @@ export const GameStore = create<GameStoreState>()(
 			},
 
 			restart: () => {
-				set((state: any) => {
+				set((state: GameStoreState) => {
 					if (state.characterBody) {
 						const [x, y, z] = [0, 0, 0];
 						const body = state.characterBody;
@@ -128,10 +144,14 @@ export const GameStore = create<GameStoreState>()(
 			},
 
 			end: () => {
-				set((state: any) => {
+				set((state: GameStoreState) => {
 					if (state.state === GameState.STARTED) {
 						if (document.pointerLockElement) {
 							document.exitPointerLock();
+						}
+
+						if (!state.user) {
+							return {};
 						}
 
 						const endTime = Date.now();

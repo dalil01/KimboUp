@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useHelper } from "@react-three/drei";
 import { AmbientLight, DirectionalLightHelper } from "three";
 
-export default function CharacterLobbyLights() {
+export default function AstroYorkieLobbyLights() {
 
 	const directionalLightRef = useRef<any>();
 	const ambientLightRef = useRef<any>();

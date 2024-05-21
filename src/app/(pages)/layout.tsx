@@ -13,6 +13,7 @@ import Web3ModalProvider from "@/app/blockchain/context/Web3Provider";
 import { AudioManagerProvider } from "@/app/hooks/useAudioManager";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/vue";
+import { Files } from "@/app/vars/Files";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 	title: "$KimboUp",
 	description: "",
 	icons: {
-		icon: "/images/favicon.ico"
+		icon: Files.IMAGES.FAVICON
 	}
 };
 

@@ -8,7 +8,7 @@ import { useAudioManager } from "@/app/hooks/useAudioManager";
 import { useAccount } from "wagmi";
 import { writeContract } from "@wagmi/core";
 import { config } from "@/app/blockchain/config/Web3Config";
-import { CarCityContractConfig } from "@/app/blockchain/config/CarCityContractConfig";
+import { CarCityConfig } from "@/app/blockchain/config/CarCity.config";
 
 export default function EndGameModal() {
 
@@ -20,7 +20,7 @@ export default function EndGameModal() {
 	const { isConnected, address, connector } = useAccount();
 	const [saved, setSaved] = useState(false);
 
-	const { playClickAudio } = useAudioManager();
+	const { playHoverButtonAudio } = useAudioManager();
 
 	useEffect(() => {
 		return () => {
@@ -34,9 +34,9 @@ export default function EndGameModal() {
 		}
 
 		await writeContract(config, {
-			abi: CarCityContractConfig.ABI,
-			address: CarCityContractConfig.ADDRESS,
-			functionName: CarCityContractConfig.FUNCTIONS.SET_TIME,
+			abi: CarCityConfig.ABI,
+			address: CarCityConfig.ADDRESS,
+			functionName: CarCityConfig.FUNCTIONS.SET_TIME,
 			args: [address, user.currentTime],
 			connector
 		}).then(() => {
@@ -68,7 +68,7 @@ export default function EndGameModal() {
                             <button
 								className={ styles.saveToKimbonet }
 								onClick={ handleSaveToKimbonet }
-                                onMouseEnter={ playClickAudio }
+                                onMouseEnter={ playHoverButtonAudio }
 							>
 								<Icon name={ Icons.IconSave } />
 								<span>SAVE TO KIMBONET</span>
@@ -79,13 +79,13 @@ export default function EndGameModal() {
 
 				<div className={ styles.separator }></div>
 
-				<div className={ styles.footer } onMouseEnter={ playClickAudio }>
+				<div className={ styles.footer } onMouseEnter={ playHoverButtonAudio }>
 					<button
 						className={ styles.footerButton }
 						onClick={ () => {
 							restartGame();
 						} }
-						onMouseEnter={ playClickAudio }
+						onMouseEnter={ playHoverButtonAudio }
 					>
 						<Icon name={ Icons.IconRestart }/>
 						<span>RESTART</span>
@@ -97,7 +97,7 @@ export default function EndGameModal() {
 							restartGame();
 							lobby();
 						} }
-						onMouseEnter={ playClickAudio }
+						onMouseEnter={ playHoverButtonAudio }
 					>
 						<Icon name={ Icons.IconClose } />
 						<span>BACK TO LOBBY</span>

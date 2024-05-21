@@ -2,9 +2,12 @@ import { RigidBody } from "@react-three/rapier";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF, useKeyboardControls } from "@react-three/drei";
 import { useEffect, useRef } from "react";
-import { Quaternion, ShaderMaterial, TextureLoader, Vector3 } from "three";
+import { Quaternion, Vector3 } from "three";
 import { GameState, GameStore, GameStoreState } from "@/app/stores/GameStore";
 import useFollowCam from "@/app/hooks/useFollowCam";
+import { UGame } from "@/app/utils/UGame";
+import { Files } from "@/app/vars/Files";
+import { Characters } from "@/app/components/characters/Characters";
 
 const DEFAULT_POSITION = new Vector3(0, .5, 0);
 const MOVEMENT_SPEED = 1.3;
@@ -15,44 +18,17 @@ const impulseAxis = new Vector3(0, 1, 0);
 
 let position = new Vector3(DEFAULT_POSITION.x, DEFAULT_POSITION.y, DEFAULT_POSITION.z);
 
-export const flameVertexShader = `
-varying vec2 vUv;
-varying float vTime;
-uniform float uTime;
-
-void main() {
-  vUv = uv;
-  vTime = uTime;
-  vec3 pos = position;
-  pos.y += sin(pos.x * 10.0 + uTime * 5.0) * 0.1;
-  pos.y += sin(pos.z * 10.0 + uTime * 5.0) * 0.1;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-}
-`;
-
-export const flameFragmentShader = `
-varying vec2 vUv;
-varying float vTime;
-uniform float uTime;
-uniform sampler2D flameTexture;
-
-void main() {
-  vec2 uv = vUv;
-  uv.y += uTime * 0.2;
-  vec4 color = texture2D(flameTexture, uv);
-  gl_FragColor = vec4(color.rgb, color.a * (1.0 - uv.y));
-}
-`;
-
-export default function Character() {
+export default function AstroYorkie() {
 
 	//const user: User = GameStore((state: any) => state.user);
 
-	const state = GameStore((state: GameStoreState) => state.state);
-	const setCharacterBody = GameStore((state: GameStoreState) => state.setCharacterBody);
-	const restartGame = GameStore((state: GameStoreState) => state.restart);
+	const { state, setCharacterBody, restart } = GameStore((state: GameStoreState) => ({
+		state: state.state,
+		setCharacterBody: state.setCharacterBody,
+		restart: state.restart
+	}));
 
-	const { scene, materials, animations } = useGLTF("models/Character.glb", "draco/gltf/") as any;
+	const { scene, materials, animations } = useGLTF(Files.MODELS.ASTRO_YORKIE, Files.DRACO.GLTF);
 
 	const [subscribeKeys, getKeys] = useKeyboardControls();
 
@@ -74,18 +50,17 @@ export default function Character() {
 			setCharacterBody(playerBodyRef.current);
 		}
 
-		const unsubscribeJump = subscribeKeys((state) => {
-			return state.jump;
-		}, (value) => {
-			if (value) {
-				jump();
-			}
-		});
+		const unsubscribeJump = subscribeKeys((state) => state.jump,
+			(value) => {
+				if (value) {
+					jump();
+				}
+			});
 
 		return () => {
 			unsubscribeJump();
 		}
-	}, []);
+	}, [state, setCharacterBody, subscribeKeys]);
 
 	useFrame(({ camera }, delta) => {
 		if (!playerBodyRef.current) {
@@ -106,7 +81,7 @@ export default function Character() {
 				const angleYCameraDirect = yaw.rotation.y;
 
 				// Rotate avatar
-				const playerDirection = findDirectionOffset({ forward, backward, leftward, rightward })
+				const playerDirection = UGame.findDirectionOffset({ forward, backward, leftward, rightward })
 				rotateQuaternion.setFromAxisAngle(rotateAngle, angleYCameraDirect + playerDirection);
 				playerBodyRef.current.setRotation(rotateQuaternion, true);
 
@@ -123,7 +98,7 @@ export default function Character() {
 		}
 
 		if (t.y < -1) {
-			restartGame();
+			restart();
 		}
 	});
 
@@ -139,7 +114,7 @@ export default function Character() {
 		<>
 			<RigidBody
 				ref={ playerBodyRef }
-				name={ "Character" }
+				name={ Characters.ASTRO_YORKIE }
 				colliders="cuboid"
 				onCollisionEnter={ () => {
 					canJump.current = true;
@@ -188,30 +163,4 @@ export default function Character() {
 			</RigidBody>
 		</>
 	)
-}
-
-function findDirectionOffset({ forward, backward, leftward, rightward }: any): number {
-	let directionOffset = 0;
-
-	if (forward) {
-		if (leftward) {
-			directionOffset = -Math.PI * 3 / 4;
-		} else if (rightward) {
-			directionOffset = Math.PI * 3 / 4;
-		} else {
-			directionOffset = -Math.PI;
-		}
-	} else if (backward) {
-		if (leftward) {
-			directionOffset = -Math.PI / 4;
-		} else if (rightward) {
-			directionOffset = Math.PI / 4;
-		}
-	} else if (leftward) {
-		directionOffset = -Math.PI / 2;
-	} else if (rightward) {
-		directionOffset = Math.PI / 2;
-	}
-
-	return directionOffset;
 }

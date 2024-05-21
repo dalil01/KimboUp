@@ -9,7 +9,9 @@ import { injected } from "@wagmi/core";
 // Get projectId at https://cloud.walletconnect.com
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
 
-if (!projectId) throw new Error("Project ID is not defined")
+if (!projectId) {
+    throw new Error("Project ID is not defined");
+}
 
 const metadata: any = {
     name: "$KimboUp",

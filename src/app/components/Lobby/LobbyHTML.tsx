@@ -18,7 +18,7 @@ export function LobbyHTML() {
 
 	const ready = GameStore((state: GameStoreState) => state.ready);
 
-	const { playClickAudio } = useAudioManager();
+	const { playHoverButtonAudio } = useAudioManager();
 
 	return (
 		<div className={ styles.containerHTML }>
@@ -69,7 +69,7 @@ export function LobbyHTML() {
 				} }
 				onMouseEnter={ () => {
 					if ((user?.username || '').length > 0) {
-						playClickAudio()
+						playHoverButtonAudio()
 					}
 				} }
 			>

@@ -3,6 +3,7 @@ import { ReactSVG } from "react-svg";
 import { GameStore } from "@/app/stores/GameStore";
 import { useEffect, useRef } from "react";
 import { useAudioManager } from "@/app/hooks/useAudioManager";
+import { Files } from "@/app/vars/Files";
 
 export function Home() {
 
@@ -28,7 +29,7 @@ export function Home() {
 		<div className={ styles.container }>
 			<ReactSVG
 				className={ styles.logo }
-				src={ "/svg/logo.svg" }
+				src={ Files.SVGS.LOGO_MAX }
 			/>
 
 			<button ref={ toLobbyBtnRef } className={ styles.toLobbyButton } onClick={ () => {

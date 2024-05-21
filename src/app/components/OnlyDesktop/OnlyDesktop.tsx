@@ -29,7 +29,7 @@ export function OnlyDesktop() {
 		<div className={ styles.container }>
 			<ReactSVG
 				className={ styles.logo }
-				src={ "/svg/logo.svg" }
+				src={ "/svg/logo-max.svg" }
 			/>
 
 			<p ref={ textRef } className={ styles.text }>$KIMBO UP IS CURRENTLY ONLY AVAILABLE ON DESKTOP&nbsp;!</p>

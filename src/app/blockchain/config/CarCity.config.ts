@@ -1,4 +1,4 @@
-export class CarCityContractConfig {
+export class CarCityConfig {
 
 	public static ADDRESS = process.env.NEXT_PUBLIC_CARCITY_CONTRAT_ADDRESS as `0x${ string }`;
 

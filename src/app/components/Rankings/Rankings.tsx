@@ -1,54 +1,82 @@
 "use client";
 
 import styles from "./Rankings.module.css";
-import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
-import { CarCityContractConfig } from "@/app/blockchain/config/CarCityContractConfig";
+import { CarCityConfig } from "@/app/blockchain/config/CarCity.config";
 import { readContract } from "@wagmi/core";
 import { config } from "@/app/blockchain/config/Web3Config";
-import { deserialize } from '@wagmi/core'
 import { UTime } from "@/app/utils/UTime";
+import { GameStore, GameStoreState } from "@/app/stores/GameStore";
 
 
 const itemsPerPage = 25;
 
 export default function Rankings() {
 
-	const [loading, setLoading] = useState(true);
-	const [pageNumber, setPageNumber] = useState(1);
-	const [usernames, setUsernames] = useState([]);
-	const [times, setTimes] = useState([]);
-	const [hasPreviousPage, setHasPreviousPage] = useState(false);
-	const [hasNextPage, setHasNextPage] = useState(false);
+	const currentConfig = GameStore((state: GameStoreState) => state.currentConfig);
+
+	const [state, setState] = useState({
+		loading: true,
+		pageNumber: 1,
+		usernames: [],
+		times: [],
+		hasPreviousPage: false,
+		hasNextPage: false
+	});
+
+	const { loading, pageNumber, usernames, times, hasPreviousPage, hasNextPage } = state;
 
 	useEffect(() => {
-		(async () => {
-			setLoading(true);
-
-			const usersRequest = await readContract(config, {
-				abi: CarCityContractConfig.ABI,
-				address: CarCityContractConfig.ADDRESS,
-				functionName: CarCityContractConfig.FUNCTIONS.GET_USERS_PAGINATED,
-				args: [pageNumber, itemsPerPage]
-			});
-
-			if ((usersRequest instanceof Array) && usersRequest.length == 4) {
-				console.log(usersRequest)
-				setUsernames(usersRequest[0]);
-				setTimes(usersRequest[1]);
-				setHasPreviousPage(usersRequest[2]);
-				setHasNextPage(usersRequest[3]);
-				setLoading(false);
+		const fetchUsers = async () => {
+			const contract = currentConfig.map.contract;
+			if (!contract) {
+				return;
 			}
-		})();
+
+			setState(prevState => ({ ...prevState, loading: true }));
+
+			try {
+				const usersRequest = await readContract(config, {
+					abi: contract.abi,
+					address: contract.address,
+					functionName: contract.functions.GET_USERS_PAGINATED,
+					args: [pageNumber, itemsPerPage]
+				});
+
+				if ((usersRequest instanceof Array) && usersRequest.length == 4) {
+					setState({
+						loading: false,
+						pageNumber,
+						usernames: usersRequest[0],
+						times: usersRequest[1],
+						hasPreviousPage: usersRequest[2],
+						hasNextPage: usersRequest[3]
+					});
+				}
+			} catch (error) {
+				console.error("Error fetching users:", error);
+			} finally {
+				setState(prevState => ({ ...prevState, loading: false }));
+			}
+		};
+
+		fetchUsers().then(() => {
+			// Nothing to do.
+		});
 	}, [pageNumber]);
 
 	const handlePreviousPage = () => {
-		setPageNumber(prev => prev - 1);
+		setState(prevState => ({
+			...prevState,
+			pageNumber: prevState.pageNumber - 1
+		}));
 	};
 
 	const handleNextPage = () => {
-		setPageNumber(prev => prev + 1);
+		setState(prevState => ({
+			...prevState,
+			pageNumber: prevState.pageNumber + 1
+		}));
 	};
 
 	return (

@@ -1,17 +1,20 @@
 import styles from "./UsernameInput.module.css";
 import { useState } from "react";
-import { GameStore, GameStoreState, User } from "@/app/stores/GameStore";
+import { GameStore, GameStoreState } from "@/app/stores/GameStore";
 import Icon from "@/app/components/Icon/Icon";
 import { Icons } from "@/app/components/Icon/Icons";
 import { useAccount } from "wagmi";
-import { CarCityContractConfig } from "@/app/blockchain/config/CarCityContractConfig";
 import { config } from "@/app/blockchain/config/Web3Config";
 import { writeContract } from "@wagmi/core";
+import { User } from "@/app/types/User";
 
 export default function UsernameInput() {
 
-	const user: undefined | User = GameStore((state: GameStoreState) => state.user);
-	const setUser = GameStore((state: GameStoreState) => state.setUser);
+	const { currentConfig, user, setUser } = GameStore((state: GameStoreState) => ({
+		currentConfig: state.currentConfig,
+		user: state.user,
+		setUser: state.setUser
+	}));
 
 	const { isConnecting, isReconnecting, isConnected, address, connector } = useAccount();
 
@@ -36,7 +39,7 @@ export default function UsernameInput() {
 								(e) => {
 									setErrorMessage('');
 
-									let newUser: any = {};
+									let newUser: User = {} as User;
 									if (user) {
 										newUser = { ...user };
 									}
@@ -49,16 +52,16 @@ export default function UsernameInput() {
 							}
 						/>
 
-						{ isConnected && displaySave && user &&
+						{ currentConfig.map.contract && isConnected && displaySave && user &&
                             <button
                                 className={ styles.saveButton }
                                 onClick={ async (e) => {
 									e.preventDefault();
 
 									await writeContract(config, {
-										abi: CarCityContractConfig.ABI,
-										address: CarCityContractConfig.ADDRESS,
-										functionName: CarCityContractConfig.FUNCTIONS.SET_USER,
+										abi: currentConfig.map.contract?.abi!,
+										address: currentConfig.map.contract?.address!,
+										functionName: currentConfig.map.contract?.functions.SET_USER!,
 										args: [address, user.username],
 										connector
 									}).then(() => {

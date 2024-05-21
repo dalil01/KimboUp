@@ -1,9 +1,12 @@
+import React from "react";
+
 import { Environment, useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
-import React from "react";
 import { GameStore, GameStoreState } from "@/app/stores/GameStore";
-import CarCityLights from "@/app/components/CarCity/CarCityLights";
+import CarCityLights from "@/app/components/maps/CarCity/CarCityLights";
 import { Object3D, Object3DEventMap } from "three";
+import { Files } from "@/app/vars/Files";
+import { EffectComposer } from "@react-three/postprocessing";
 
 type SquareParkProps = {}
 
@@ -28,8 +31,11 @@ export default function CarCity(props: SquareParkProps) {
 
 	const {} = props;
 
-	const startGame = GameStore((state: GameStoreState) => state.start);
-	const endGame = GameStore((state: GameStoreState) => state.end);
+	const { currentConfig, start, end } = GameStore((state: GameStoreState) => ({
+		currentConfig: state.currentConfig,
+		start: state.start,
+		end: state.end
+	}));
 
 	const { scene, materials, animations } = useGLTF("/models/CarCity.glb", "draco/gltf/");
 	if (scene) {
@@ -57,17 +63,16 @@ export default function CarCity(props: SquareParkProps) {
 		<>
 			<CarCityLights/>
 
-			<Environment files="/hdrs/HDR_multi_nebulae.hdr" background />
+			<Environment files={ Files.HDRS.SPACE } background />
 
 			<group position={ [0, 0, 0] }>
 				{ startStartPlatform &&
                     <RigidBody
-                        type='fixed'
+                        type="fixed"
                         colliders={ "cuboid" }
                         onCollisionEnter={ (e) => {
-							// @ts-ignore
-							if (e.other.rigidBodyObject.name === "Character") {
-								startGame();
+							if (e.other.rigidBodyObject?.name === currentConfig.character.main.name) {
+								start();
 							}
 						} }
                     >
@@ -77,12 +82,11 @@ export default function CarCity(props: SquareParkProps) {
 
 				{ endFlag &&
                     <RigidBody
-                        type='fixed'
+                        type="fixed"
                         colliders="cuboid"
                         onCollisionEnter={ (e) => {
-							// @ts-ignore
-							if (e.other.rigidBodyObject.name === "Character") {
-								endGame();
+							if (e.other.rigidBodyObject?.name === currentConfig.character.main.name) {
+								end();
 							}
 						} }
                     >
@@ -94,7 +98,7 @@ export default function CarCity(props: SquareParkProps) {
 					cuboids.map((cuboid, index) => (
 						<RigidBody
 							key={ "cuboid" + index }
-							type='fixed'
+							type="fixed"
 							colliders="cuboid"
 						>
 							<Primitive object={ cuboid }/>
@@ -105,13 +109,31 @@ export default function CarCity(props: SquareParkProps) {
 
 				{ scene &&
                     <RigidBody
-                        type='fixed'
+                        type="fixed"
                         colliders="trimesh"
                     >
                         <Primitive object={ scene }/>
                     </RigidBody>
 				}
 			</group>
+
+			<EffectComposer
+				multisampling={0}
+			>
+				<></>
+				{/*<SMAA />*/}
+				{/* <N8AO distanceFalloff={1} aoRadius={1} intensity={3} /> */}
+				{/*<Bloom
+						luminanceThreshold={0}
+						mipmapBlur
+						luminanceSmoothing={0.01}
+						intensity={0.5}
+					/>*/}
+				{/*<TiltShift2 />*/}
+				{/* <ChromaticAberration offset={[0.0006, 0.0006]} /> */}
+				{/*<HueSaturation saturation={0.05} />*/}
+				{/* <Vignette eskil={false} offset={0.1} darkness={0.4} /> */}
+			</EffectComposer>
 		</>
 	);
 

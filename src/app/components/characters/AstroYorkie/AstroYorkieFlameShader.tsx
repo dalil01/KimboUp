@@ -3,7 +3,7 @@ import { shaderMaterial } from '@react-three/drei'
 import { extend, useFrame } from '@react-three/fiber'
 import { Color, DoubleSide, AdditiveBlending } from 'three'
 
-export default function FakeFlame({ falloff = 3, glowInternalRadius = 1.0, glowColor = 'orange', glowSharpness = 1.0 , isBoosting = false}) {
+export default function AstroYorkieFlameShader({ falloff = 3, glowInternalRadius = 1.0, glowColor = 'orange', glowSharpness = 1.0 , isBoosting = false}) {
 
 	const ref: any = useRef()
 

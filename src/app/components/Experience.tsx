@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { KeyboardControls, useGLTF } from "@react-three/drei";
-import { GameState, GameStore } from "@/app/stores/GameStore";
+import { GameState, GameStore, GameStoreState } from "@/app/stores/GameStore";
 import { LobbyCanvas } from "@/app/components/Lobby/LobbyCanvas";
 import { LobbyHTML } from "@/app/components/Lobby/LobbyHTML";
 import { Home } from "@/app/components/Home/Home";
@@ -9,6 +9,7 @@ import { useLoader } from "@react-three/fiber";
 import { RGBELoader } from "three-stdlib";
 import useIsDesktop from "@/app/hooks/useIsDesktop";
 import { OnlyDesktop } from "@/app/components/OnlyDesktop/OnlyDesktop";
+import { Files } from "@/app/vars/Files";
 
 export enum Controls {
 	FORWARD = "forward",
@@ -20,24 +21,24 @@ export enum Controls {
 
 export default function Experience() {
 
+	const isDesktop = useIsDesktop();
+
 	const controlsMap = useMemo(() => [
-		{ name: Controls.FORWARD, keys: ['ArrowUp', 'KeyW'] },
-		{ name: Controls.BACKWARD, keys: ['ArrowDown', 'KeyS'] },
-		{ name: Controls.LEFTWARD, keys: ['ArrowLeft', 'KeyA'] },
-		{ name: Controls.RIGHTWARD, keys: ['ArrowRight', 'KeyD'] },
-		{ name: Controls.JUMP, keys: ['Space'] },
+		{ name: Controls.FORWARD, keys: ["ArrowUp", "KeyW"] },
+		{ name: Controls.BACKWARD, keys: ["ArrowDown", "KeyS"] },
+		{ name: Controls.LEFTWARD, keys: ["ArrowLeft", "KeyA"] },
+		{ name: Controls.RIGHTWARD, keys: ["ArrowRight", "KeyD"] },
+		{ name: Controls.JUMP, keys: ["Space"] },
 	], []);
 
-	const state = GameStore((state: any) => state.state);
-
-	const isDesktop = useIsDesktop();
+	const state = GameStore((state: GameStoreState) => state.state);
 
 	return (
 		<>
 			{
 				isDesktop ?
 					<KeyboardControls map={ controlsMap }>
-						{ state === GameState.HOME && <Home/> }
+						{ state === GameState.HOME && <Home /> }
 
 						{ state === GameState.LOBBY &&
                             <>
@@ -58,6 +59,12 @@ export default function Experience() {
 	)
 }
 
-useGLTF.preload("/models/Character.glb", "draco/gltf/");
-useGLTF.preload("/models/CarCity.glb", "draco/gltf/");
-useLoader.preload(RGBELoader, '/textures/nebula2.hdr');
+// Preload models
+for (const [, path] of Object.entries(Files.MODELS)) {
+	useGLTF.preload(path, Files.DRACO.GLTF);
+}
+
+// Preload hdrs
+for (const [, path] of Object.entries(Files.HDRS)) {
+	useLoader.preload(RGBELoader, path);
+}
