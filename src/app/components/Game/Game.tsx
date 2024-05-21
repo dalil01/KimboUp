@@ -16,6 +16,7 @@ import { useAudioManager } from "@/app/hooks/useAudioManager";
 import Timer from "@/app/components/Timer/Timer";
 import EndGameModal from "@/app/components/EndGameModal/EndGameModal";
 import { Bloom, EffectComposer, HueSaturation, SMAA, TiltShift2 } from "@react-three/postprocessing";
+import { Perf } from "r3f-perf";
 
 export default function Game() {
 
@@ -87,14 +88,11 @@ export default function Game() {
 						<CarCity/>
 					</Physics>
 
-					{/* <Stats /> */ }
 
 					<EffectComposer
 						multisampling={0}
-						disableNormalPass
-						disableSSAO
-						disableDepthPass
 					>
+						<></>
 						{/*<SMAA />*/}
 						{/* <N8AO distanceFalloff={1} aoRadius={1} intensity={3} /> */}
 						{/*<Bloom
@@ -108,6 +106,9 @@ export default function Game() {
 						{/*<HueSaturation saturation={0.05} />*/}
 						{/* <Vignette eskil={false} offset={0.1} darkness={0.4} /> */}
 					</EffectComposer>
+
+					{/* <Stats /> */}
+					{/*<Perf />*/}
 				</Suspense>
 			</Canvas>
 		</div>
