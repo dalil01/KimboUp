@@ -15,6 +15,7 @@ import Logo from "@/app/components/Logo/Logo";
 import { useAudioManager } from "@/app/hooks/useAudioManager";
 import Timer from "@/app/components/Timer/Timer";
 import EndGameModal from "@/app/components/EndGameModal/EndGameModal";
+import { Bloom, EffectComposer, HueSaturation, SMAA, TiltShift2 } from "@react-three/postprocessing";
 
 export default function Game() {
 
@@ -34,6 +35,7 @@ export default function Game() {
 			 }
 	 */
 
+	// @ts-ignore
 	return (
 		<div className={ styles.container }>
 			<Logo/>
@@ -86,6 +88,26 @@ export default function Game() {
 					</Physics>
 
 					{/* <Stats /> */ }
+
+					<EffectComposer
+						multisampling={0}
+						disableNormalPass
+						disableSSAO
+						disableDepthPass
+					>
+						{/*<SMAA />*/}
+						{/* <N8AO distanceFalloff={1} aoRadius={1} intensity={3} /> */}
+						{/*<Bloom
+						luminanceThreshold={0}
+						mipmapBlur
+						luminanceSmoothing={0.01}
+						intensity={0.5}
+					/>*/}
+						{/*<TiltShift2 />*/}
+						{/* <ChromaticAberration offset={[0.0006, 0.0006]} /> */}
+						{/*<HueSaturation saturation={0.05} />*/}
+						{/* <Vignette eskil={false} offset={0.1} darkness={0.4} /> */}
+					</EffectComposer>
 				</Suspense>
 			</Canvas>
 		</div>

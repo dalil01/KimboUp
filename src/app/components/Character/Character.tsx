@@ -2,7 +2,7 @@ import { RigidBody } from "@react-three/rapier";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF, useKeyboardControls } from "@react-three/drei";
 import { useEffect, useRef } from "react";
-import { Quaternion, Vector3 } from "three";
+import { Quaternion, ShaderMaterial, TextureLoader, Vector3 } from "three";
 import { GameState, GameStore, GameStoreState } from "@/app/stores/GameStore";
 import useFollowCam from "@/app/hooks/useFollowCam";
 
@@ -14,6 +14,35 @@ const rotateQuaternion = new Quaternion();
 const impulseAxis = new Vector3(0, 1, 0);
 
 let position = new Vector3(DEFAULT_POSITION.x, DEFAULT_POSITION.y, DEFAULT_POSITION.z);
+
+export const flameVertexShader = `
+varying vec2 vUv;
+varying float vTime;
+uniform float uTime;
+
+void main() {
+  vUv = uv;
+  vTime = uTime;
+  vec3 pos = position;
+  pos.y += sin(pos.x * 10.0 + uTime * 5.0) * 0.1;
+  pos.y += sin(pos.z * 10.0 + uTime * 5.0) * 0.1;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+}
+`;
+
+export const flameFragmentShader = `
+varying vec2 vUv;
+varying float vTime;
+uniform float uTime;
+uniform sampler2D flameTexture;
+
+void main() {
+  vec2 uv = vUv;
+  uv.y += uTime * 0.2;
+  vec4 color = texture2D(flameTexture, uv);
+  gl_FragColor = vec4(color.rgb, color.a * (1.0 - uv.y));
+}
+`;
 
 export default function Character() {
 

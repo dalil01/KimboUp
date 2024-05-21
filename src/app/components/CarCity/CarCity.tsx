@@ -21,7 +21,8 @@ const Primitive = ({ object }: { object: any }) => {
 
 let startStartPlatform: Object3D<Object3DEventMap>;
 let endFlag: Object3D<Object3DEventMap>;
-const cuboids: Object3D<Object3DEventMap>[] = []
+
+const cuboids: Object3D<Object3DEventMap>[] = [];
 
 export default function CarCity(props: SquareParkProps) {
 

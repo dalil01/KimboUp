@@ -14,6 +14,7 @@ contract CarCity {
     address[] private userAddressByTime;
 
     function setUser(address _address, string memory _username) public {
+        require(bytes(_username).length > 0, "Username required.");
         require(addressByUsername[_username] == address(0), "This username already exists.");
         addressByUsername[_username] = _address;
         users[_address].username = _username;
@@ -50,21 +51,28 @@ contract CarCity {
     }
 
     function getUsersPaginated(uint256 _pageNumber, uint256 _itemsPerPage) public view returns (string[] memory, uint256[] memory, bool, bool) {
-        require(_pageNumber > 0, "Page number must be greater than zero");
+        require(_pageNumber > 0, "Page number must be greater than zero.");
 
         if (_itemsPerPage > 100) {
             _itemsPerPage = 100;
         }
 
         uint256 startIndex = (_pageNumber - 1) * _itemsPerPage;
-        uint256 endIndex = startIndex + _itemsPerPage;
 
+        uint256 endIndex = startIndex + _itemsPerPage;
         if (endIndex > userAddressByTime.length) {
             endIndex = userAddressByTime.length;
         }
 
-        string[] memory usernames = new string[](endIndex - startIndex);
-        uint256[] memory times = new uint256[](endIndex - startIndex);
+        uint256 count = 0;
+        for (uint256 i = startIndex; i < endIndex; i++) {
+            if (users[userAddressByTime[i]].timeMs > 0) {
+                count++;
+            }
+        }
+
+        string[] memory usernames = new string[](count);
+        uint256[] memory times = new uint256[](count);
 
         uint256 index = 0;
         for (uint256 i = startIndex; i < endIndex; i++) {
@@ -72,13 +80,19 @@ contract CarCity {
             if (user.timeMs > 0) {
                 usernames[index] = user.username;
                 times[index] = user.timeMs;
+                index++;
             }
-
-            index++;
         }
 
         bool hasPrevious = _pageNumber > 1;
-        bool hasNext = endIndex < userAddressByTime.length;
+
+        bool hasNext = false;
+        for (uint256 i = endIndex; i < userAddressByTime.length; i++) {
+            if (users[userAddressByTime[i]].timeMs > 0) {
+                hasNext = true;
+                break;
+            }
+        }
 
         return (usernames, times, hasPrevious, hasNext);
     }

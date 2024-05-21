@@ -3,7 +3,7 @@ import { ReactSVG } from "react-svg";
 import { GameStore } from "@/app/stores/GameStore";
 import { useEffect, useRef } from "react";
 import { useAudioManager } from "@/app/hooks/useAudioManager";
-import Copy from "@/app/components/Copy/Copy";
+import Copyright from "@/app/components/Copyright/Copyright";
 
 export function OnlyDesktop() {
 
@@ -34,7 +34,7 @@ export function OnlyDesktop() {
 
 			<p ref={ textRef } className={ styles.text }>$KIMBO UP IS CURRENTLY ONLY AVAILABLE ON DESKTOP&nbsp;!</p>
 
-			<Copy />
+			<Copyright />
 		</div>
 	)
 }
