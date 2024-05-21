@@ -1,0 +1,16 @@
+.select {
+    position: absolute;
+    left: 18rem;
+    width: max-content;
+    animation: slideTop 0.6s forwards;
+    color: #E7EFF3;
+}
+
+@keyframes slideTop {
+    0% {
+        top: -100%;
+    }
+    100% {
+        top: 5.5rem;
+    }
+}

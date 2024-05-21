@@ -2,6 +2,7 @@ export enum Icons {
   IconClock = "icon-clock",
   IconClose = "icon-close",
   IconDog = "icon-dog",
+  IconEdit = "icon-edit",
   IconFlag = "icon-flag",
   IconInfo = "icon-info",
   IconKeyboard = "icon-keyboard",

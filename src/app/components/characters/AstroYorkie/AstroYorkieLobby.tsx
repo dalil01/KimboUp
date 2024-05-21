@@ -10,6 +10,7 @@ export default function AstroYorkieLobby() {
 	return (
 		<>
 			<AstroYorkieLobbyLights />
+
 			<group position={ [0, 0, 0] }>
 				<primitive
 					object={ scene }

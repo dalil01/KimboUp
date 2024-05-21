@@ -3,20 +3,23 @@ import styles from "./Lobby.module.css";
 import Icon from "@/app/components/Icon/Icon";
 import { Icons } from "@/app/components/Icon/Icons";
 import Link from "next/link";
-import { GameStore, GameStoreState, User } from "@/app/stores/GameStore";
-import UsernameInput from "@/app/components/UsernameInput/UsernameInput";
-import ConnectWallet from "@/app/components/ConnectWallet/ConnectWallet";
+import { GameStore, GameStoreState } from "@/app/stores/GameStore";
+import UsernameInput from "@/app/components/Lobby/UsernameInput/UsernameInput";
+import ConnectWallet from "@/app/components/Lobby/ConnectWallet/ConnectWallet";
 import { UTime } from "@/app/utils/UTime";
 import { useAudioManager } from "@/app/hooks/useAudioManager";
 import { Routes } from "@/app/vars/Routes";
 import Logo from "@/app/components/Logo/Logo";
-import SettingsButton from "@/app/components/Settings/SettingsButton";
+import SettingsButton from "@/app/components/SettingsButton/SettingsButton";
+import { ChooseMap } from "@/app/components/Lobby/ChooseMap/ChooseMap";
+import Editor from "@/app/components/Lobby/Editor/Editor";
 
 export function LobbyHTML() {
 
-	const user: undefined | User = GameStore((state: GameStoreState) => state.user);
-
-	const ready = GameStore((state: GameStoreState) => state.ready);
+	const { user, ready } = GameStore((state: GameStoreState) => ({
+		user: state.user,
+		ready: state.ready
+	}));
 
 	const { playHoverButtonAudio } = useAudioManager();
 
@@ -24,11 +27,13 @@ export function LobbyHTML() {
 		<div className={ styles.containerHTML }>
 			<Logo/>
 
-			<ConnectWallet/>
+			<ChooseMap />
 
-			<SettingsButton/>
+			<ConnectWallet />
 
-			<UsernameInput/>
+			<SettingsButton />
+
+			<UsernameInput />
 
 			<Link className={ styles.rankings } href={ Routes.RANKINGS }>
 				<Icon name={ Icons.IconRankings }/>
@@ -59,6 +64,10 @@ export function LobbyHTML() {
 					</div>
 				</div>
 			</button>
+
+			{/*
+			<Editor />
+*/}
 
 			<button
 				className={ (user?.username) ? styles.playButtonActive : styles.playButton }

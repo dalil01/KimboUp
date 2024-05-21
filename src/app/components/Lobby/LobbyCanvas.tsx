@@ -25,7 +25,7 @@ export function LobbyCanvas() {
 				fov: 45,
 				near: 0.1,
 				far: 200,
-				position: [-1, 1, 3]
+				position: [-.5, 1, 3]
 			} }
 			onMouseOver={ () => {
 				document.body.style.cursor = "grab";

@@ -6,7 +6,7 @@ import React, { Suspense } from "react";
 import Loading from "@/app/components/Loading/Loading";
 import { Preload } from "@react-three/drei";
 import { Physics } from "@react-three/rapier";
-import SettingsButton from "@/app/components/Settings/SettingsButton";
+import SettingsButton from "@/app/components/SettingsButton/SettingsButton";
 import Icon from "@/app/components/Icon/Icon";
 import { Icons } from "@/app/components/Icon/Icons";
 import Logo from "@/app/components/Logo/Logo";
