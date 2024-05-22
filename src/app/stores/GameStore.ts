@@ -5,6 +5,7 @@ import { User } from "@/app/types/User";
 import { Characters } from "@/app/components/characters/Characters";
 import { Maps } from "@/app/components/maps/Maps";
 import { CarCityConfig } from "@/app/blockchain/config/CarCity.config";
+import { CharacterEditors } from "@/app/components/characters/CharacterEditors";
 
 export enum GameState {
 	HOME,
@@ -42,6 +43,9 @@ export const GameStore = create<GameStoreState>()(
 					},
 					lobby: {
 						name: Characters.ASTRO_YORKIE_LOBBY
+					},
+					editor: {
+						name: CharacterEditors.ASTRO_YORKIE_EDITOR
 					}
 				},
 				map: {

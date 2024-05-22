@@ -1,10 +1,10 @@
 @font-face {
 font-family: "icons";
-src: url("../fonts/icons.eot?d45c9c85bcd3be76b5fc84c8062ca62e#iefix") format("embedded-opentype"),
-url("../fonts/icons.svg?d45c9c85bcd3be76b5fc84c8062ca62e#icons") format("svg"),
-url("../fonts/icons.ttf?d45c9c85bcd3be76b5fc84c8062ca62e") format("truetype"),
-url("../fonts/icons.woff?d45c9c85bcd3be76b5fc84c8062ca62e") format("woff"),
-url("../fonts/icons.woff2?d45c9c85bcd3be76b5fc84c8062ca62e") format("woff2");
+src: url("../fonts/icons.eot?b260ce129e175910fe54bdff0f55f499#iefix") format("embedded-opentype"),
+url("../fonts/icons.svg?b260ce129e175910fe54bdff0f55f499#icons") format("svg"),
+url("../fonts/icons.ttf?b260ce129e175910fe54bdff0f55f499") format("truetype"),
+url("../fonts/icons.woff?b260ce129e175910fe54bdff0f55f499") format("woff"),
+url("../fonts/icons.woff2?b260ce129e175910fe54bdff0f55f499") format("woff2");
 }
 
     i[class^="icon-"]:before, i[class*=" icon-"]:before {
@@ -33,39 +33,42 @@ line-height: 1;
         .icon-flag:before {
     content: "\f105";
     }
-        .icon-info:before {
+        .icon-hanger:before {
     content: "\f106";
     }
-        .icon-keyboard:before {
+        .icon-info:before {
     content: "\f107";
     }
-        .icon-media:before {
+        .icon-keyboard:before {
     content: "\f108";
     }
-        .icon-play:before {
+        .icon-media:before {
     content: "\f109";
     }
-        .icon-rankings:before {
+        .icon-play:before {
     content: "\f10a";
     }
-        .icon-restart:before {
+        .icon-rankings:before {
     content: "\f10b";
     }
-        .icon-save:before {
+        .icon-restart:before {
     content: "\f10c";
     }
-        .icon-settings:before {
+        .icon-save:before {
     content: "\f10d";
     }
-        .icon-up:before {
+        .icon-settings:before {
     content: "\f10e";
     }
-        .icon-volume-off:before {
+        .icon-up:before {
     content: "\f10f";
     }
-        .icon-volume-up:before {
+        .icon-volume-off:before {
     content: "\f110";
     }
-        .icon-wallet:before {
+        .icon-volume-up:before {
     content: "\f111";
+    }
+        .icon-wallet:before {
+    content: "\f112";
     }

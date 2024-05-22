@@ -12,7 +12,7 @@ import { Routes } from "@/app/vars/Routes";
 import Logo from "@/app/components/Logo/Logo";
 import SettingsButton from "@/app/components/SettingsButton/SettingsButton";
 import { ChooseMap } from "@/app/components/Lobby/ChooseMap/ChooseMap";
-import Editor from "@/app/components/Lobby/Editor/Editor";
+import CharacterEditor from "@/app/components/Lobby/CharacterEditor/CharacterEditor";
 
 export function LobbyHTML() {
 
@@ -65,9 +65,7 @@ export function LobbyHTML() {
 				</div>
 			</button>
 
-			{/*
-			<Editor />
-*/}
+			<CharacterEditor />
 
 			<button
 				className={ (user?.username) ? styles.playButtonActive : styles.playButton }

@@ -1,5 +1,6 @@
 import { Characters } from "@/app/components/characters/Characters";
 import { Maps } from "@/app/components/maps/Maps";
+import { CharacterEditors } from "@/app/components/characters/CharacterEditors";
 
 export type GameConfig = {
 	character: {
@@ -9,6 +10,10 @@ export type GameConfig = {
 		},
 		lobby: {
 			name: Characters,
+			props?: any
+		},
+		editor: {
+			name: CharacterEditors,
 			props?: any
 		}
 	},

@@ -4,6 +4,7 @@ export enum Icons {
   IconDog = "icon-dog",
   IconEdit = "icon-edit",
   IconFlag = "icon-flag",
+  IconHanger = "icon-hanger",
   IconInfo = "icon-info",
   IconKeyboard = "icon-keyboard",
   IconMedia = "icon-media",
