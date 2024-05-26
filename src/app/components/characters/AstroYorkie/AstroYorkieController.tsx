@@ -26,8 +26,7 @@ export default function AstroYorkieController({
 		...props
 }: any) {
 
-	const { players, user, state, setCharacterBody, restart } = GameStore((state: GameStoreState) => ({
-		players: state.players,
+	const {  user, state, setCharacterBody, restart } = GameStore((state: GameStoreState) => ({
 		user: state.user,
 		state: state.state,
 		setCharacterBody: state.setCharacterBody,
@@ -69,7 +68,7 @@ export default function AstroYorkieController({
 
 		const unsubscribeJump = subscribeKeys((state) => state.jump,
 			(value) => {
-				if (value) {
+				if (value && playerState.id === currentPlayer.id) {
 					jump();
 				}
 			});
