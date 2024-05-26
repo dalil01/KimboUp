@@ -88,11 +88,11 @@ export default function Rankings() {
 					<>
 						<table className={ styles.table }>
 							<thead>
-							<tr>
-								<th></th>
-								<th className={ styles.usernameTitle }>USERNAME</th>
-								<th className={ styles.timeTitle }>TIME</th>
-							</tr>
+								<tr>
+									<th></th>
+									<th className={ styles.usernameTitle }>USERNAME</th>
+									<th className={ styles.timeTitle }>TIME</th>
+								</tr>
 							</thead>
 							<tbody>
 							{

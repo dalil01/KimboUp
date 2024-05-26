@@ -2,7 +2,7 @@ import React from "react";
 
 import { Environment, useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
-import { GameStore, GameStoreState } from "@/app/stores/GameStore";
+import { GameStore, GameStoreState, PlayerState } from "@/app/stores/GameStore";
 import CarCityLights from "@/app/components/maps/CarCity/CarCityLights";
 import { Object3D, Object3DEventMap } from "three";
 import { Files } from "@/app/vars/Files";
@@ -76,7 +76,7 @@ export default function CarCity(props: SquareParkProps) {
                         type="fixed"
                         colliders={ "cuboid" }
                         onCollisionEnter={ (e) => {
-							if (e.other.rigidBodyObject?.name === currentPlayer.getState("bodyName")) {
+							if (e.other.rigidBodyObject?.name === currentPlayer.getState(PlayerState.BODY_NAME)) {
 								start();
 							}
 						} }
@@ -90,16 +90,15 @@ export default function CarCity(props: SquareParkProps) {
                         type="fixed"
                         colliders="cuboid"
                         onCollisionEnter={ (e) => {
-							if (e.other.rigidBodyObject?.name === currentPlayer.getState("bodyName")) {
-								currentPlayer.setState("finished", true);
+							if (e.other.rigidBodyObject?.name === currentPlayer.getState(PlayerState.BODY_NAME)) {
+								currentPlayer.setState(PlayerState.FINISHED, true);
 								end();
-								currentPlayer.setState("time", GameStore.getState().endTime);
-								console.log(currentPlayer.getState("time"));
+								currentPlayer.setState(PlayerState.TIME, GameStore.getState().user?.currentTime);
 							}
 
 							let finishedPlayersLen = 0;
 							for (const player of players) {
-								if (player.state.getState("finished")) {
+								if (player.state.getState(PlayerState.FINISHED)) {
 									finishedPlayersLen++;
 								}
 							}

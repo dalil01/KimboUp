@@ -13,6 +13,8 @@ import Logo from "@/app/components/Logo/Logo";
 import SettingsButton from "@/app/components/SettingsButton/SettingsButton";
 import { ChooseMap } from "@/app/components/Lobby/ChooseMap/ChooseMap";
 import CharacterEditor from "@/app/components/Lobby/CharacterEditor/CharacterEditor";
+import EndGameModal from "@/app/components/EndGameModal/EndGameModal";
+import React from "react";
 
 export function LobbyHTML() {
 
@@ -33,7 +35,10 @@ export function LobbyHTML() {
 
 			<SettingsButton />
 
-			<UsernameInput />
+			<div className={ styles.editorContainer }>
+				<CharacterEditor />
+				<UsernameInput />
+			</div>
 
 			<Link className={ styles.rankings } href={ Routes.RANKINGS + '/' + window.location.hash }>
 				<Icon name={ Icons.IconRankings }/>
@@ -64,8 +69,6 @@ export function LobbyHTML() {
 					</div>
 				</div>
 			</button>
-
-			<CharacterEditor />
 
 			<button
 				className={ (user?.username) ? styles.playButtonActive : styles.playButton }

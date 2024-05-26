@@ -1,11 +1,8 @@
 .container {
     position: absolute;
-    top: 54%;
-    left: 50%;
-    transform: translate(-50%, -54%);
+    top: -100%;
+    right: 0;
     padding: 0 5px;
-    width: 80%;
-    max-width: 360px;
     z-index: 100;
     display: flex;
     align-items: center;

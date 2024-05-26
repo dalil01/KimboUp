@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef } from "react";
-import { GameState, GameStore, GameStoreState } from "@/app/stores/GameStore";
+import { useEffect, useRef } from "react";
+import { GameState, GameStore, GameStoreState, PlayerState } from "@/app/stores/GameStore";
 import { Quaternion, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
 import { UGame } from "@/app/utils/UGame";
@@ -11,11 +11,9 @@ import { myPlayer } from "playroomkit";
 import AstroYorkieName from "@/app/components/characters/AstroYorkie/AstroYorkieName";
 
 type AstroYorkieControllerProps = {
-	playerState: boolean;
-	positionX: number;
 }
 
-const DEFAULT_POSITION = new Vector3(0, .5, 0);
+const DEFAULT_POSITION = new Vector3(0, 1.5, 0);
 const MOVEMENT_SPEED = 1.3;
 
 const rotateAngle = new Vector3(0, 1, 0);
@@ -24,12 +22,12 @@ const impulseAxis = new Vector3(0, 1, 0);
 
 export default function AstroYorkieController({
 	playerState,
-	position,
 	  bodyName,
 		...props
 }: any) {
 
-	const { user, state, setCharacterBody, restart } = GameStore((state: GameStoreState) => ({
+	const { players, user, state, setCharacterBody, restart } = GameStore((state: GameStoreState) => ({
+		players: state.players,
 		user: state.user,
 		state: state.state,
 		setCharacterBody: state.setCharacterBody,
@@ -45,22 +43,24 @@ export default function AstroYorkieController({
 	const playerRef = useRef<any>();
 	const textRef = useRef<any>();
 
-	const { yaw,pivot } = useFollowCam(playerState.id === currentPlayer?.id ? playerRef : null, [0, .8, 1.8]);
+	const { yaw, pivot } = useFollowCam(playerState.id === currentPlayer?.id ? playerRef : null, [0, .8, 1.8]);
 
 	const canJump = useRef(true);
 
 	useEffect(() => {
 		if (playerState.id === currentPlayer?.id && playerBodyRef.current) {
-			playerState.setState("bodyName", bodyName);
+			playerState.setState(PlayerState.BODY_NAME, bodyName);
+			playerState.setState(PlayerState.USERNAME, user?.username);
 
 			if (state === GameState.READY) {
-				playerState.setState("pos", position);
-				playerBodyRef.current.setTranslation(position);
+				playerState.setState(PlayerState.POSITION, DEFAULT_POSITION);
+				playerState.setState(PlayerState.FINISHED, false);
+				playerBodyRef.current.setTranslation(DEFAULT_POSITION);
 			} else {
-				const pos = playerState.getState("pos");
+				const pos = playerState.getState(PlayerState.POSITION);
 				if (pos?.x) {
 					playerBodyRef.current.setTranslation(pos);
-					playerBodyRef.current.setRotation(playerState.getState("rot"));
+					playerBodyRef.current.setRotation(playerState.getState(PlayerState.ROTATION));
 				}
 			}
 
@@ -84,44 +84,44 @@ export default function AstroYorkieController({
 			return;
 		}
 
-		if (document.pointerLockElement) {
-			const { forward, backward, leftward, rightward, jump } = getKeys();
-			const move = forward || backward || leftward || rightward;
-
-			if (move) {
-				const angleYCameraDirect = yaw.rotation.y;
-
-				// Rotate avatar
-				const playerDirection = UGame.findDirectionOffset({ forward, backward, leftward, rightward })
-				rotateQuaternion.setFromAxisAngle(rotateAngle, angleYCameraDirect + playerDirection);
-				playerBodyRef.current.setRotation(rotateQuaternion, true);
-
-				// Calculate impulse
-				const impulseDirection = new Vector3(Math.sin(playerDirection), 0, Math.cos(playerDirection));
-				impulseDirection.applyAxisAngle(impulseAxis, angleYCameraDirect);
-
-				playerBodyRef.current.applyImpulse(impulseDirection.multiplyScalar(MOVEMENT_SPEED * delta), true);
-			}
-		}
-
-		if (textRef.current) {
-			// TODO
-		}
-
 		if (playerState.id === currentPlayer.id) {
+			if (document.pointerLockElement) {
+				const { forward, backward, leftward, rightward, jump } = getKeys();
+				const move = forward || backward || leftward || rightward;
+
+				if (move) {
+					const angleYCameraDirect = yaw.rotation.y;
+
+					// Rotate avatar
+					const playerDirection = UGame.findDirectionOffset({ forward, backward, leftward, rightward });
+					rotateQuaternion.setFromAxisAngle(rotateAngle, angleYCameraDirect + playerDirection);
+					playerBodyRef.current.setRotation(rotateQuaternion, true);
+
+					// Calculate impulse
+					const impulseDirection = new Vector3(Math.sin(playerDirection), 0, Math.cos(playerDirection));
+					impulseDirection.applyAxisAngle(impulseAxis, angleYCameraDirect);
+
+					playerBodyRef.current.applyImpulse(impulseDirection.multiplyScalar(MOVEMENT_SPEED * delta), true);
+				}
+			}
+
+			if (textRef.current) {
+				// TODO
+			}
+
 			const translation = playerBodyRef.current.translation();
 
-			playerState.setState("pos", translation);
-			playerState.setState("rot", playerBodyRef.current.rotation());
+			playerState.setState(PlayerState.POSITION, translation);
+			playerState.setState(PlayerState.ROTATION, playerBodyRef.current.rotation());
 
 			if (translation.y < -1) {
 				restart();
 			}
 		} else {
-			const pos = playerState.getState("pos");
+			const pos = playerState.getState(PlayerState.POSITION);
 			if (pos?.x) {
 				playerBodyRef.current?.setTranslation(pos);
-				playerBodyRef.current?.setRotation(playerState.getState("rot"));
+				playerBodyRef.current?.setRotation(playerState.getState(PlayerState.ROTATION));
 			}
 		}
 	});
@@ -134,7 +134,7 @@ export default function AstroYorkieController({
 	}
 
 	return (
-		<group key={ playerState.id } ref={ controllerRef } position={ position } { ...props }>
+		<group key={ playerState.id } ref={ controllerRef } position={ DEFAULT_POSITION } { ...props }>
 			<RigidBody
 				ref={ playerBodyRef }
 				name={ bodyName }

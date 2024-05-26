@@ -18,6 +18,15 @@ export enum GameState {
 	ENDED_ALL
 }
 
+export enum PlayerState {
+	BODY_NAME = "bodyName",
+	USERNAME = "username",
+	FINISHED = "finished",
+	POSITION = "pos",
+	ROTATION = "rot",
+	TIME = "time",
+}
+
 export type GameStoreState = {
 	currentConfig: GameConfig;
 	user?: User;

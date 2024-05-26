@@ -15,8 +15,7 @@ import Timer from "@/app/components/Timer/Timer";
 import EndGameModal from "@/app/components/EndGameModal/EndGameModal";
 import { CharacterControllerFactory } from "@/app/components/characters/CharacterControllerFactory";
 import { MapFactory } from "@/app/components/maps/MapFactory";
-import { insertCoin, myPlayer, onPlayerJoin } from "playroomkit";
-import { Vector3 } from "three";
+import { insertCoin, onPlayerJoin } from "playroomkit";
 
 export default function Game() {
 
@@ -30,6 +29,8 @@ export default function Game() {
 	}));
 
 	const { playHoverButtonAudio } = useAudioManager();
+
+	const [linkCopied, setLinkCopied] = useState(false);
 
 	useEffect(() => {
 		const joinPlayRoom = async () => {
@@ -60,7 +61,7 @@ export default function Game() {
 		<div className={ styles.container }>
 			<Logo />
 
-			{ state === GameState.ENDED_ALL
+			{ state === GameState.ENDED || state === GameState.ENDED_ALL
 				?
 				<EndGameModal />
 				:
@@ -70,6 +71,21 @@ export default function Game() {
 			<SettingsButton
 				right={ "10rem" }
 			/>
+
+			<button className={ styles.usersButton }
+					onClick={ () => {
+						navigator.clipboard.writeText(window.location.href).then(() => {
+							setLinkCopied(true);
+						});
+					} }
+					onMouseEnter={ playHoverButtonAudio }
+					onMouseLeave={ () => {
+						setLinkCopied(false);
+					} }
+			>
+				<Icon name={ Icons.IconUsers }/>
+				<span className={ styles.copyLinkTooltipText }>{ linkCopied ? "LINK COPIED !" : "COPY LINK" }</span>
+			</button>
 
 			<button className={ styles.restartButton }
 					onClick={ () => {
@@ -110,7 +126,6 @@ export default function Game() {
 										CharacterControllerFactory.create(currentConfig.character.main.name, {
 											...currentConfig.character.main.props,
 											playerState: state,
-											position: new Vector3(0, 2, 0),
 											bodyName: currentConfig.character.main.name + '-' + state.id
 										})
 									}

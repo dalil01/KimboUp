@@ -5,6 +5,16 @@
     top: 0;
 }
 
+.editorContainer {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 360px;
+    z-index: 100;
+}
+
 .infoContainer {
     position: absolute;
     bottom: 6rem;
