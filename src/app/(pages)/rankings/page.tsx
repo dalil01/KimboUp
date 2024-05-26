@@ -8,7 +8,7 @@ export default function RankingsPage() {
 		<>
 			<PageTitle title="Rankings" />
 			<Rankings/>
-			<GoToBack url={ Routes.ROOT } />
+			<GoToBack />
 		</>
 	);
 }

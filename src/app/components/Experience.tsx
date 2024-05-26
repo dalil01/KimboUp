@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { KeyboardControls, useGLTF } from "@react-three/drei";
 import { GameState, GameStore, GameStoreState } from "@/app/stores/GameStore";
 import { LobbyCanvas } from "@/app/components/Lobby/LobbyCanvas";
@@ -21,6 +21,11 @@ export enum Controls {
 
 export default function Experience() {
 
+	const { state, players } = GameStore((state: GameStoreState) => ({
+		state: state.state,
+		players: state.players,
+	}));
+
 	const isDesktop = useIsDesktop();
 
 	const controlsMap = useMemo(() => [
@@ -30,8 +35,6 @@ export default function Experience() {
 		{ name: Controls.RIGHTWARD, keys: ["ArrowRight", "KeyD"] },
 		{ name: Controls.JUMP, keys: ["Space"] },
 	], []);
-
-	const state = GameStore((state: GameStoreState) => state.state);
 
 	return (
 		<>

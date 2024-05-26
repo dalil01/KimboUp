@@ -5,6 +5,7 @@ import Icon from "@/app/components/Icon/Icon";
 import { Icons } from "@/app/components/Icon/Icons";
 import { CharacterEditorFactory } from "@/app/components/characters/CharacterEditorFactory";
 import { GameStore, GameStoreState } from "@/app/stores/GameStore";
+import { useAudioManager } from "@/app/hooks/useAudioManager";
 
 export default function CharacterEditor() {
 
@@ -13,6 +14,8 @@ export default function CharacterEditor() {
 	const contentRef = useRef<any>();
 
 	const [displayContent, setDisplayContent] = useState(false);
+
+	const { playHoverButtonAudio } = useAudioManager();
 
 	useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {
@@ -30,18 +33,21 @@ export default function CharacterEditor() {
 
 	return (
 		<div className={ styles.container }>
-			<button className={ styles.button } onClick={ (e) => {
-				e.preventDefault();
-				e.stopPropagation();
-				setDisplayContent(!displayContent)
-			} }>
-				<Icon name={ Icons.IconHanger } />
+			<button className={ styles.button }
+					onClick={ (e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						setDisplayContent(!displayContent)
+					} }
+					onMouseEnter={ playHoverButtonAudio }
+			>
+				<Icon name={ Icons.IconHanger }/>
 			</button>
 
 			{ displayContent &&
-				<div ref={ contentRef } className={ styles.content }>
+                <div ref={ contentRef } className={ styles.content }>
 					{ CharacterEditorFactory.create(currentConfig.character.editor.name) }
-				</div>
+                </div>
 			}
 		</div>
 	);

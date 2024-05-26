@@ -35,7 +35,7 @@ export function LobbyHTML() {
 
 			<UsernameInput />
 
-			<Link className={ styles.rankings } href={ Routes.RANKINGS }>
+			<Link className={ styles.rankings } href={ Routes.RANKINGS + '/' + window.location.hash }>
 				<Icon name={ Icons.IconRankings }/>
 				<span>RANKINGS</span>
 			</Link>

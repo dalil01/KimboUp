@@ -7,6 +7,7 @@ import CarCityLights from "@/app/components/maps/CarCity/CarCityLights";
 import { Object3D, Object3DEventMap } from "three";
 import { Files } from "@/app/vars/Files";
 import { EffectComposer } from "@react-three/postprocessing";
+import { myPlayer } from "playroomkit";
 
 type SquareParkProps = {}
 
@@ -31,11 +32,15 @@ export default function CarCity(props: SquareParkProps) {
 
 	const {} = props;
 
-	const { currentConfig, start, end } = GameStore((state: GameStoreState) => ({
+	const { currentConfig, start, end, endAll, players } = GameStore((state: GameStoreState) => ({
 		currentConfig: state.currentConfig,
 		start: state.start,
-		end: state.end
+		end: state.end,
+		endAll: state.endAll,
+		players: state.players
 	}));
+
+	const currentPlayer = myPlayer();
 
 	const { scene, materials, animations } = useGLTF("/models/CarCity.glb", "draco/gltf/");
 	if (scene) {
@@ -61,7 +66,7 @@ export default function CarCity(props: SquareParkProps) {
 
 	return (
 		<>
-			<CarCityLights/>
+			<CarCityLights />
 
 			<Environment files={ Files.HDRS.SPACE } background />
 
@@ -71,7 +76,7 @@ export default function CarCity(props: SquareParkProps) {
                         type="fixed"
                         colliders={ "cuboid" }
                         onCollisionEnter={ (e) => {
-							if (e.other.rigidBodyObject?.name === currentConfig.character.main.name) {
+							if (e.other.rigidBodyObject?.name === currentPlayer.getState("bodyName")) {
 								start();
 							}
 						} }
@@ -85,8 +90,22 @@ export default function CarCity(props: SquareParkProps) {
                         type="fixed"
                         colliders="cuboid"
                         onCollisionEnter={ (e) => {
-							if (e.other.rigidBodyObject?.name === currentConfig.character.main.name) {
+							if (e.other.rigidBodyObject?.name === currentPlayer.getState("bodyName")) {
+								currentPlayer.setState("finished", true);
 								end();
+								currentPlayer.setState("time", GameStore.getState().endTime);
+								console.log(currentPlayer.getState("time"));
+							}
+
+							let finishedPlayersLen = 0;
+							for (const player of players) {
+								if (player.state.getState("finished")) {
+									finishedPlayersLen++;
+								}
+							}
+
+							if (finishedPlayersLen == players.length) {
+								endAll();
 							}
 						} }
                     >

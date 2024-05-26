@@ -25,11 +25,11 @@ export default function Settings() {
 					<Icon name={ audioEnabled ? Icons.IconVolumeUp : Icons.IconVolumeOff } />
 					<span>AUDIO</span>
 				</button>
-				<Link className={ styles.item } href={ Routes.HOW_TO_PLAY } onMouseEnter={ playHoverButtonAudio }>
+				<Link className={ styles.item } href={ Routes.HOW_TO_PLAY + window.location.hash } onMouseEnter={ playHoverButtonAudio }>
 					<Icon name={ Icons.IconInfo } />
 					<span>HOW TO PLAY</span>
 				</Link>
-				<Link className={ styles.item } href={ Routes.CREDITS } onMouseEnter={ playHoverButtonAudio }>
+				<Link className={ styles.item } href={ Routes.CREDITS + window.location.hash } onMouseEnter={ playHoverButtonAudio }>
 					<Icon name={ Icons.IconMedia } />
 					<span>CREDITS</span>
 				</Link>

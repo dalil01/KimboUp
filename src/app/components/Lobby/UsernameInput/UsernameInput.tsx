@@ -16,7 +16,7 @@ export default function UsernameInput() {
 		setUser: state.setUser
 	}));
 
-	const { isConnecting, isReconnecting, isConnected, address, connector } = useAccount();
+	const { isConnecting, isReconnecting, isConnected, isDisconnected, address, connector } = useAccount();
 
 	const [displaySave, setDisplaySave] = useState<undefined | boolean>(false);
 	const [errorMessage, setErrorMessage] = useState<string>('');
@@ -69,9 +69,9 @@ export default function UsernameInput() {
 										setDisplaySave(false);
 									}).catch((error) => {
 										if (error.message) {
-											const userNameAlreadyExists = "This username already exists"
+											const userNameAlreadyExists = "This username already exists";
 											if (error.message.includes(userNameAlreadyExists)) {
-												setErrorMessage(userNameAlreadyExists);
+												setErrorMessage(userNameAlreadyExists + '.');
 											}
 										}
 
