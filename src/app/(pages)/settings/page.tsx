@@ -7,7 +7,7 @@ export default function SettingsPage() {
 	return (
 		<>
 			<Settings />
-			<GoToBack url={ Routes.ROOT } />
+			<GoToBack />
 		</>
 	);
 }

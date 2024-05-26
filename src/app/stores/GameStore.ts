@@ -2,17 +2,29 @@ import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import { GameConfig } from "@/app/types/GameConfig";
 import { User } from "@/app/types/User";
-import { Characters } from "@/app/components/characters/Characters";
+import { CharacterControllers } from "@/app/components/characters/CharacterControllers";
 import { Maps } from "@/app/components/maps/Maps";
 import { CarCityConfig } from "@/app/blockchain/config/CarCity.config";
 import { CharacterEditors } from "@/app/components/characters/CharacterEditors";
+import { MultiPlayer } from "@/app/types/MultiPlayer";
+import { Characters } from "@/app/components/characters/Characters";
 
 export enum GameState {
 	HOME,
 	LOBBY,
 	READY,
 	STARTED,
-	ENDED
+	ENDED,
+	ENDED_ALL
+}
+
+export enum PlayerState {
+	BODY_NAME = "bodyName",
+	USERNAME = "username",
+	FINISHED = "finished",
+	POSITION = "pos",
+	ROTATION = "rot",
+	TIME = "time",
 }
 
 export type GameStoreState = {
@@ -20,6 +32,8 @@ export type GameStoreState = {
 	user?: User;
 	setUser: (user: User) => void;
 	autoSetTimeAsCurrentTime: () => void;
+	players: MultiPlayer[];
+	setPlayers: (callback: (players: MultiPlayer[]) => any[]) => void;
 	characterBody?: undefined | any;
 	setCharacterBody: (characterBody: any) => void;
 	startTime: number;
@@ -31,6 +45,7 @@ export type GameStoreState = {
 	start: () => void;
 	restart: () => void;
 	end: () => void;
+	endAll: () => void;
 }
 
 export const GameStore = create<GameStoreState>()(
@@ -39,10 +54,10 @@ export const GameStore = create<GameStoreState>()(
 			currentConfig: {
 				character: {
 					main: {
-						name: Characters.ASTRO_YORKIE,
+						name: CharacterControllers.ASTRO_YORKIE
 					},
 					lobby: {
-						name: Characters.ASTRO_YORKIE_LOBBY
+						name: Characters.ASTRO_YORKIE
 					},
 					editor: {
 						name: CharacterEditors.ASTRO_YORKIE_EDITOR
@@ -62,6 +77,8 @@ export const GameStore = create<GameStoreState>()(
 			endTime: 0,
 
 			state: GameState.HOME,
+
+			players: [],
 
 			setUser: (user: User) => {
 				set(() => {
@@ -173,9 +190,26 @@ export const GameStore = create<GameStoreState>()(
 
 					return {};
 				});
+			},
+
+
+			endAll: () => {
+				set((state: GameStoreState) => {
+					return {
+						state: GameState.ENDED_ALL
+					}
+				});
+			},
+
+			setPlayers: (callback) => {
+				set((state) => {
+					const players = callback(state.players);
+					return {
+						players
+					}
+				});
 			}
 		};
-
 	})
 );
 

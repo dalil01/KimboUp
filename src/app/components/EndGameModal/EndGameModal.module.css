@@ -23,32 +23,78 @@
     color: var(--text-dark);
     background: white;
     box-shadow: var(--box-shadow);
+    overflow: auto;
 }
 
 .header {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: start;
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    top: 0;
+    left: 13px;
+    width: 3.4rem;
+    z-index: 100;
 }
 
 .content {
+    margin-top: 30px;
     display: flex;
     align-items: start;
     flex-direction: column;
     gap: 25px;
 }
 
-.timeContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-dark);
+.statsContainer {
     width: 100%;
+}
+
+.statsContainer th {
+    text-align: center;
+    padding: .6rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.usernameTitle, .timeTitle {
+    color: var(--text-white);
+    background: var(--background-color-4);
+}
+
+.statsContainer td {
+    text-align: center;
+    font-size: 1rem;
+    padding: .6rem 1.5rem;
+    border-radius: 5px;
+    box-shadow: var(--box-shadow);
+}
+
+.index {
+    color: var(--text-dark);
+}
+
+.currentIndex {
+    color: var(--text-white);
+    background: var(--background-color-2);
+}
+
+.username {
+    width: 50%;
+    background: var(--text-white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .timeText {
     font-size: 1.8rem;
     font-weight: bold;
+    background: var(--background-color-2);
+    color: var(--text-white);
 }
 
 .newBestTime {
@@ -90,14 +136,14 @@
 }
 
 .footer {
-    margin-top: 30px;
+    margin-top: 25px;
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
 
 .footerButton {
-    font-size: .8rem;
+    font-size: .785rem;
     font-weight: 600;
     padding: 3% 6%;
     border-radius: 10px;

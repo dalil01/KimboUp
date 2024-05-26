@@ -2,7 +2,7 @@ import { useThree, useFrame } from "@react-three/fiber";
 import { MutableRefObject, useEffect, useMemo } from "react";
 import { Object3D, Vector3 } from "three";
 
-export default function useFollowCam(ref: MutableRefObject<any>, offset: number[]) {
+export default function useFollowCam(ref: null | MutableRefObject<any>, offset: number[]) {
 
 	const { scene, camera } = useThree();
 
@@ -13,6 +13,10 @@ export default function useFollowCam(ref: MutableRefObject<any>, offset: number[
 	const worldPosition = useMemo(() => new Vector3(), []);
 
 	useEffect(() => {
+		if (!ref) {
+			return;
+		}
+
 		scene.add(pivot);
 		pivot.add(alt);
 		alt.position.y = offset[1];
@@ -31,6 +35,10 @@ export default function useFollowCam(ref: MutableRefObject<any>, offset: number[
 	}, [camera]);
 
 	useFrame((_, delta) => {
+		if (!ref) {
+			return;
+		}
+
 		ref.current.getWorldPosition(worldPosition);
 		pivot.position.lerp(worldPosition, delta * 5);
 	});

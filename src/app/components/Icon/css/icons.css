@@ -1,10 +1,10 @@
 @font-face {
 font-family: "icons";
-src: url("../fonts/icons.eot?b260ce129e175910fe54bdff0f55f499#iefix") format("embedded-opentype"),
-url("../fonts/icons.svg?b260ce129e175910fe54bdff0f55f499#icons") format("svg"),
-url("../fonts/icons.ttf?b260ce129e175910fe54bdff0f55f499") format("truetype"),
-url("../fonts/icons.woff?b260ce129e175910fe54bdff0f55f499") format("woff"),
-url("../fonts/icons.woff2?b260ce129e175910fe54bdff0f55f499") format("woff2");
+src: url("../fonts/icons.eot?2f3b6844ea2b1556e2eb9c7f4b009006#iefix") format("embedded-opentype"),
+url("../fonts/icons.svg?2f3b6844ea2b1556e2eb9c7f4b009006#icons") format("svg"),
+url("../fonts/icons.ttf?2f3b6844ea2b1556e2eb9c7f4b009006") format("truetype"),
+url("../fonts/icons.woff?2f3b6844ea2b1556e2eb9c7f4b009006") format("woff"),
+url("../fonts/icons.woff2?2f3b6844ea2b1556e2eb9c7f4b009006") format("woff2");
 }
 
     i[class^="icon-"]:before, i[class*=" icon-"]:before {
@@ -63,12 +63,15 @@ line-height: 1;
         .icon-up:before {
     content: "\f10f";
     }
-        .icon-volume-off:before {
+        .icon-users:before {
     content: "\f110";
     }
-        .icon-volume-up:before {
+        .icon-volume-off:before {
     content: "\f111";
     }
-        .icon-wallet:before {
+        .icon-volume-up:before {
     content: "\f112";
+    }
+        .icon-wallet:before {
+    content: "\f113";
     }

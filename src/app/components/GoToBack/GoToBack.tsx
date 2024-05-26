@@ -1,14 +1,16 @@
+"use client";
+
 import styles from "./GoToBack.module.css";
 import Link from "next/link";
 
 type GoToBackProps = {
-	url: string;
+	url?: string;
 }
 
 export default function GoToBack(props: GoToBackProps) {
 
 	const {
-		url = '/'
+		url = '/' + window.location.hash
 	} = props;
 
 	return (

@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 
-import React, { useEffect } from "react";
+import React from "react";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -40,18 +40,18 @@ export default function RootLayout({ children, }: Readonly<{
 				  rel="stylesheet"/>
 		</Head>
 		<body >
-		<main className="main">
-			<AudioManagerProvider>
-				<Web3ModalProvider initialState={ initialState }>
-					{ children }
-				</Web3ModalProvider>
-			</AudioManagerProvider>
+			<main className="main">
+				<AudioManagerProvider>
+					<Web3ModalProvider initialState={ initialState }>
+						{ children }
+					</Web3ModalProvider>
+				</AudioManagerProvider>
 
-			{/*
-			<Analytics />
-			<SpeedInsights />
-			*/}
-		</main>
+				{/*
+				<Analytics />
+				<SpeedInsights />
+				*/}
+			</main>
 		</body>
 		</html>
 	);

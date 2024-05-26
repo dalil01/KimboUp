@@ -14,6 +14,7 @@ export enum Icons {
   IconSave = "icon-save",
   IconSettings = "icon-settings",
   IconUp = "icon-up",
+  IconUsers = "icon-users",
   IconVolumeOff = "icon-volume-off",
   IconVolumeUp = "icon-volume-up",
   IconWallet = "icon-wallet",

@@ -1,4 +1,3 @@
 export enum Characters {
-	ASTRO_YORKIE = "AstroYorkie",
-	ASTRO_YORKIE_LOBBY = "AstroYorkieLobby"
+	ASTRO_YORKIE = "AstroYorkie"
 }

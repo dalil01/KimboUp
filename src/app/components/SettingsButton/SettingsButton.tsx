@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./SettingsButton.module.css";
 
 import { Routes } from "@/app/vars/Routes";
@@ -22,7 +24,7 @@ export default function SettingsButton(props: SettingsButtonProps) {
 		<Link
 			className={ styles.settingsButton }
 			style={ { right } }
-			href={ Routes.SETTINGS }
+			href={ Routes.SETTINGS  + window.location.hash }
 			onMouseEnter={ playHoverButtonAudio }
 		>
 			<Icon name={ Icons.IconSettings } />
