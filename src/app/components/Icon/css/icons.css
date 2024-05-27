@@ -1,10 +1,10 @@
 @font-face {
 font-family: "icons";
-src: url("../fonts/icons.eot?2f3b6844ea2b1556e2eb9c7f4b009006#iefix") format("embedded-opentype"),
-url("../fonts/icons.svg?2f3b6844ea2b1556e2eb9c7f4b009006#icons") format("svg"),
-url("../fonts/icons.ttf?2f3b6844ea2b1556e2eb9c7f4b009006") format("truetype"),
-url("../fonts/icons.woff?2f3b6844ea2b1556e2eb9c7f4b009006") format("woff"),
-url("../fonts/icons.woff2?2f3b6844ea2b1556e2eb9c7f4b009006") format("woff2");
+src: url("../fonts/icons.eot?40058ea368f0c2f28727f4010959d861#iefix") format("embedded-opentype"),
+url("../fonts/icons.svg?40058ea368f0c2f28727f4010959d861#icons") format("svg"),
+url("../fonts/icons.ttf?40058ea368f0c2f28727f4010959d861") format("truetype"),
+url("../fonts/icons.woff?40058ea368f0c2f28727f4010959d861") format("woff"),
+url("../fonts/icons.woff2?40058ea368f0c2f28727f4010959d861") format("woff2");
 }
 
     i[class^="icon-"]:before, i[class*=" icon-"]:before {
@@ -42,36 +42,39 @@ line-height: 1;
         .icon-keyboard:before {
     content: "\f108";
     }
-        .icon-media:before {
+        .icon-link-external:before {
     content: "\f109";
     }
-        .icon-play:before {
+        .icon-media:before {
     content: "\f10a";
     }
-        .icon-rankings:before {
+        .icon-play:before {
     content: "\f10b";
     }
-        .icon-restart:before {
+        .icon-rankings:before {
     content: "\f10c";
     }
-        .icon-save:before {
+        .icon-restart:before {
     content: "\f10d";
     }
-        .icon-settings:before {
+        .icon-save:before {
     content: "\f10e";
     }
-        .icon-up:before {
+        .icon-settings:before {
     content: "\f10f";
     }
-        .icon-users:before {
+        .icon-up:before {
     content: "\f110";
     }
-        .icon-volume-off:before {
+        .icon-users:before {
     content: "\f111";
     }
-        .icon-volume-up:before {
+        .icon-volume-off:before {
     content: "\f112";
     }
-        .icon-wallet:before {
+        .icon-volume-up:before {
     content: "\f113";
+    }
+        .icon-wallet:before {
+    content: "\f114";
     }

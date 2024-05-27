@@ -16,6 +16,6 @@ export default function Loading() {
 			zIndex: 1000
 		}
 	} center>
-		<p className={ styles.loading }>LOADING...&nbsp;({ progress }%)</p>
+		<p className={ styles.loading }>LOADING...&nbsp;({ Math.floor(progress) }%)</p>
 	</Html>
 }

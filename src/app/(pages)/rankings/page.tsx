@@ -6,7 +6,7 @@ import { Routes } from "@/app/vars/Routes";
 export default function RankingsPage() {
 	return (
 		<>
-			<PageTitle title="Rankings" />
+			<PageTitle title="RANKINGS" />
 			<Rankings/>
 			<GoToBack />
 		</>

@@ -7,6 +7,7 @@ export enum Icons {
   IconHanger = "icon-hanger",
   IconInfo = "icon-info",
   IconKeyboard = "icon-keyboard",
+  IconLinkExternal = "icon-link-external",
   IconMedia = "icon-media",
   IconPlay = "icon-play",
   IconRankings = "icon-rankings",

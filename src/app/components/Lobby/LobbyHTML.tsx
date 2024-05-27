@@ -36,7 +36,7 @@ export function LobbyHTML() {
 			<SettingsButton />
 
 			<div className={ styles.editorContainer }>
-				<CharacterEditor />
+				{/* <CharacterEditor /> */}
 				<UsernameInput />
 			</div>
 

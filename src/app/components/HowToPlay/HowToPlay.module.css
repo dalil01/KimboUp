@@ -1,3 +1,53 @@
 .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: var(--text-dark);
+    background: white;
+    width: 500px;
+    border: 5px solid var(--background-color-3);
+    padding: 2.1%;
+    border-radius: 18px;
+}
 
+.title {
+    display: flex;
+    align-items: center;
+    color: var(--background-color-2);
+}
+
+.subTitle {
+}
+
+.keyboardIcon {
+    font-size: 2rem;
+}
+
+.keys {
+    margin-top: 3px;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    gap: 10px;
+}
+
+.keys p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.keys strong {
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+    background: var(--background-color-3);
+}
+
+.keys span {
+    color: rgba(0, 0, 0, 0.67);
 }

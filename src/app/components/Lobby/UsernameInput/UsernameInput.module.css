@@ -26,10 +26,10 @@
 }
 
 .saveButton {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     border: 3px solid var(--text-white);
-    border-radius: 10px;
-    padding: 1.2%;
+    padding: 6px 9px;
+    border-radius: 30%;
     color: var(--text-white);
     background-color: var(--background-color-2);
     cursor: pointer;

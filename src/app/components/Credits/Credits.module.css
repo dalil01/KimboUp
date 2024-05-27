@@ -1,3 +1,57 @@
 .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 60px;
+    gap: 80px;
+    max-height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    overflow: auto;
+    background: var(--text-white);
+    box-shadow: var(--box-shadow);
+    border: 5px solid var(--background-color-3);
+    color: var(--text-dark);
+    border-radius: 10px;
+}
 
+.mainContent, .others {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.others {
+    margin-top: 45px;
+}
+
+.block {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.blockContent {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title {
+    font-size: 1.21rem;
+    color: var(--background-color-2);
+}
+
+.name {
+    font-size: 1.35rem;
+}
+
+.link {
+    cursor: pointer;
+    color: var(--text-dark);
+    text-decoration: none;
 }

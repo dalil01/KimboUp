@@ -9,7 +9,7 @@
 .usersButton {
     position: absolute;
     top: 2rem;
-    right: 14rem;
+    right: 10rem;
     font-size: 1.5rem;
     padding: .3% .6%;
     background: var(--background-color-2);

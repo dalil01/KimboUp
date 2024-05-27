@@ -1,7 +1,8 @@
-import { useGLTF } from "@react-three/drei";
-import { useMemo } from "react";
+import { Cylinder, useGLTF } from "@react-three/drei";
+import React, { useEffect, useMemo } from "react";
 import { Files } from "@/app/vars/Files";
 import { SkeletonUtils } from "three-stdlib";
+import { MeshStandardMaterial } from "three";
 
 type AstroYorkieProps = {
 	position?: [number, number, number];
@@ -22,6 +23,19 @@ export default function AstroYorkie(props: AstroYorkieProps) {
 	const sceneClone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
 	//const { nodes } = useGraph(sceneClone);
 
+	/*useEffect(() => {
+		sceneClone.traverse((child: any) => {
+			if (child.isMesh) {
+				child.material = new MeshStandardMaterial({
+					color: "orange",
+					metalness: 0.7,
+					roughness: 0.2,
+				});
+			}
+		});
+	}, [sceneClone]);
+	 */
+
 	return (
 		<group position={ position }>
 			<primitive
@@ -30,6 +44,7 @@ export default function AstroYorkie(props: AstroYorkieProps) {
 				castShadow={ true }
 				receiveShadow={ true }
 			/>
+
 			{
 
 				lights &&

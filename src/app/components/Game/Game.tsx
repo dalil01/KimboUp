@@ -69,7 +69,7 @@ export default function Game() {
 			}
 
 			<SettingsButton
-				right={ "10rem" }
+				right={ "14rem" }
 			/>
 
 			<button className={ styles.usersButton }
