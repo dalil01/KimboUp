@@ -84,7 +84,7 @@ export default function Game() {
 					} }
 			>
 				<Icon name={ Icons.IconUsers }/>
-				<span className={ styles.copyLinkTooltipText }>{ linkCopied ? "LINK COPIED !" : "COPY LINK" }</span>
+				<span className={ styles.copyLinkTooltipText }>{ linkCopied ? "LINK COPIED !" : "INVITE FRIENDS" }</span>
 			</button>
 
 			<button className={ styles.restartButton }
