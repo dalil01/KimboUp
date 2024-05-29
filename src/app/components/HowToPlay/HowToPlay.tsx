@@ -15,8 +15,8 @@ export default function HowToPlay() {
 			<h3 className={ styles.subTitle }>DISPLACEMENT</h3>
 
 			<div className={ styles.keys }>
-				<p><strong>Z or ARROW UP :</strong><span>MOVE FORWARD</span></p>
-				<p><strong>Q or ARROW LEFT :</strong><span>MOVE LEFT</span></p>
+				<p><strong>W or Z or ARROW UP :</strong><span>MOVE FORWARD</span></p>
+				<p><strong>A or Q or ARROW LEFT :</strong><span>MOVE LEFT</span></p>
 				<p><strong>S or ARROW DOWN :</strong><span>MOVE BACKWARD</span></p>
 				<p><strong>D or ARROW RIGHT :</strong><span>MOVE RIGHT</span></p>
 				<p><strong>SPACE :</strong><span>JUMP</span></p>
