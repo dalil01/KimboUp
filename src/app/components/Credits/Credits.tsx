@@ -48,15 +48,22 @@ export function Credits() {
 						</a>
 					</div>
 					<div className={ styles.blockContent }>
-						<h2 className={ styles.name }>AREALITY</h2>
-						<a className={ styles.link } href="https://www.cgtrader.com/designers/Areality"
+						<h2 className={ styles.name }>HAMITAS</h2>
+						<a className={ styles.link } href="https://www.cgtrader.com/designers/hamitas"
 						   target="_blank">
 							<Icon name={ Icons.IconLinkExternal }/>
 						</a>
 					</div>
 					<div className={ styles.blockContent }>
-						<h2 className={ styles.name }>CHAMOD1999</h2>
-						<a className={ styles.link } href="https://www.cgtrader.com/designers/chamod1999"
+						<h2 className={ styles.name }>MAEL MOINIER</h2>
+						<a className={ styles.link } href="https://www.cgtrader.com/designers/maelstrow"
+						   target="_blank">
+							<Icon name={ Icons.IconLinkExternal }/>
+						</a>
+					</div>
+					<div className={ styles.blockContent }>
+						<h2 className={ styles.name }>NIKDOX</h2>
+						<a className={ styles.link } href="https://www.cgtrader.com/designers/nikdox"
 						   target="_blank">
 							<Icon name={ Icons.IconLinkExternal }/>
 						</a>

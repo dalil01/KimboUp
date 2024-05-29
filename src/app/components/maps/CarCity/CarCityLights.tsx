@@ -22,6 +22,10 @@ export default function CarCityLights()
         //directionalLight.target.updateMatrixWorld();
     });
 
+    /*
+    {x: -50.01984786987305, y: 22.94029998779297, z: 87.03223419189453}
+     */
+
     return <>
         <directionalLight
             ref={ directionalLightRef }
