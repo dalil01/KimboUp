@@ -39,6 +39,7 @@ export default function UsernameInput() {
 							type="text"
 							placeholder="Username*"
 							defaultValue={ user?.username || '' }
+							maxLength={ 50 }
 							onChange={
 								(e) => {
 									setErrorMessage('');

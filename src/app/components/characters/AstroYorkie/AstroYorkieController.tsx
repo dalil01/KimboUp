@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { GameState, GameStore, GameStoreState, PlayerState } from "@/app/stores/GameStore";
 import { Quaternion, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
@@ -10,8 +10,7 @@ import AstroYorkie from "@/app/components/characters/AstroYorkie/AstroYorkie";
 import { myPlayer } from "playroomkit";
 import AstroYorkieName from "@/app/components/characters/AstroYorkie/AstroYorkieName";
 
-type AstroYorkieControllerProps = {
-}
+type AstroYorkieControllerProps = {}
 
 const DEFAULT_POSITION = new Vector3(0, 1.5, 0);
 const MOVEMENT_SPEED = 1.3;
@@ -21,12 +20,12 @@ const rotateQuaternion = new Quaternion();
 const impulseAxis = new Vector3(0, 1, 0);
 
 export default function AstroYorkieController({
-	playerState,
-	  bodyName,
-		...props
-}: any) {
+												  playerState,
+												  bodyName,
+												  ...props
+											  }: any) {
 
-	const {  user, state, setCharacterBody, restart } = GameStore((state: GameStoreState) => ({
+	const { user, state, setCharacterBody, restart } = GameStore((state: GameStoreState) => ({
 		user: state.user,
 		state: state.state,
 		setCharacterBody: state.setCharacterBody,
@@ -46,11 +45,13 @@ export default function AstroYorkieController({
 
 	const canJump = useRef(true);
 
+	if (playerState.id === currentPlayer?.id && playerBodyRef.current) {
+		playerState.setState(PlayerState.BODY_NAME, bodyName);
+		playerState.setState(PlayerState.USERNAME, user?.username);
+	}
+
 	useEffect(() => {
 		if (playerState.id === currentPlayer?.id && playerBodyRef.current) {
-			playerState.setState(PlayerState.BODY_NAME, bodyName);
-			playerState.setState(PlayerState.USERNAME, user?.username);
-
 			if (state === GameState.READY) {
 				playerState.setState(PlayerState.POSITION, DEFAULT_POSITION);
 				playerState.setState(PlayerState.FINISHED, false);
@@ -151,7 +152,7 @@ export default function AstroYorkieController({
 			>
 				<group ref={ playerRef }>
 					{ playerState.id !== currentPlayer?.id &&
-						<AstroYorkieName ref={ textRef } name={ playerState.getState(PlayerState.USERNAME) } />
+                        <AstroYorkieName ref={ textRef } name={ playerState.getState(PlayerState.USERNAME) || 'dfdf' }/>
 					}
 					<AstroYorkie
 						scale={ 0.75 }
