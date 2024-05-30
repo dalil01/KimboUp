@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { GameState, GameStore, GameStoreState, PlayerState } from "@/app/stores/GameStore";
 import { Quaternion, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
@@ -104,10 +104,6 @@ export default function AstroYorkieController({
 				}
 			}
 
-			if (textRef.current) {
-				// TODO
-			}
-
 			const translation = playerBodyRef.current.translation();
 
 			playerState.setState(PlayerState.POSITION, translation);
@@ -121,6 +117,11 @@ export default function AstroYorkieController({
 			if (pos?.x) {
 				playerBodyRef.current?.setTranslation(pos);
 				playerBodyRef.current?.setRotation(playerState.getState(PlayerState.ROTATION));
+			}
+
+			if (textRef.current) {
+				// TODO : improve
+				textRef.current.lookAt(camera.position);
 			}
 		}
 	});
@@ -149,7 +150,9 @@ export default function AstroYorkieController({
 
 			>
 				<group ref={ playerRef }>
-					{/* <AstroYorkieName ref={ textRef } /> */}
+					{ playerState.id !== currentPlayer?.id &&
+						<AstroYorkieName ref={ textRef } />
+					}
 					<AstroYorkie
 						scale={ 0.75 }
 						lights={ false }

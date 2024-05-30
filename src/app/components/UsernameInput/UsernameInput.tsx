@@ -1,4 +1,5 @@
 import styles from "./UsernameInput.module.css";
+
 import { useState } from "react";
 import { GameStore, GameStoreState } from "@/app/stores/GameStore";
 import Icon from "@/app/components/Icon/Icon";
@@ -7,6 +8,7 @@ import { useAccount } from "wagmi";
 import { config } from "@/app/blockchain/config/Web3Config";
 import { writeContract } from "@wagmi/core";
 import { User } from "@/app/types/User";
+import { useAudioManager } from "@/app/hooks/useAudioManager";
 
 export default function UsernameInput() {
 
@@ -16,9 +18,11 @@ export default function UsernameInput() {
 		setUser: state.setUser
 	}));
 
+	const { playSoundEffect } = useAudioManager();
+
 	const { isConnecting, isReconnecting, isConnected, isDisconnected, address, connector } = useAccount();
 
-	const [displaySave, setDisplaySave] = useState<undefined | boolean>(false);
+	const [displaySave, setDisplaySave] = useState<undefined | boolean>( (isConnected && user?.username || '').length > 0 ? user?.username !== user?.contractUsername : false);
 	const [errorMessage, setErrorMessage] = useState<string>('');
 
 	return (
@@ -78,6 +82,7 @@ export default function UsernameInput() {
 										console.error(error);
 									});
 								} }
+                                onMouseEnter={ playSoundEffect }
                             >
                                 <Icon name={ Icons.IconSave }/>
                             </button>

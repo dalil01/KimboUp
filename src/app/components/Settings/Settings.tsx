@@ -10,7 +10,11 @@ import { Routes } from "@/app/vars/Routes";
 
 export default function Settings() {
 
-	const { audioEnabled, setAudioEnabled , playHoverButtonAudio } = useAudioManager();
+	const {
+		musicEnabled, toggleMusicEnabled ,
+		soundEffectsEnabled, toggleSoundEffectEnabled ,
+		playSoundEffect
+	} = useAudioManager();
 
 	return (
 		<div className={ styles.container }>
@@ -18,18 +22,28 @@ export default function Settings() {
 				<button
 					className={ styles.item }
 					onClick={ () => {
-						setAudioEnabled(!audioEnabled);
+						toggleMusicEnabled();
 					} }
-					onMouseEnter={ playHoverButtonAudio }
+					onMouseEnter={ playSoundEffect }
 				>
-					<Icon name={ audioEnabled ? Icons.IconVolumeUp : Icons.IconVolumeOff } />
-					<span>AUDIO</span>
+					<Icon name={ musicEnabled ? Icons.IconVolumeUp : Icons.IconVolumeOff } />
+					<span>MUSIC</span>
 				</button>
-				<Link className={ styles.item } href={ Routes.HOW_TO_PLAY + window.location.hash } onMouseEnter={ playHoverButtonAudio }>
+				<button
+					className={ styles.item }
+					onClick={ () => {
+						toggleSoundEffectEnabled();
+					} }
+					onMouseEnter={ playSoundEffect }
+				>
+					<Icon name={ soundEffectsEnabled ? Icons.IconVolumeUp : Icons.IconVolumeOff } />
+					<span>SOUND EFFECTS</span>
+				</button>
+				<Link className={ styles.item } href={ Routes.HOW_TO_PLAY + window.location.hash } onMouseEnter={ playSoundEffect }>
 					<Icon name={ Icons.IconInfo } />
 					<span>HOW TO PLAY</span>
 				</Link>
-				<Link className={ styles.item } href={ Routes.CREDITS + window.location.hash } onMouseEnter={ playHoverButtonAudio }>
+				<Link className={ styles.item } href={ Routes.CREDITS + window.location.hash } onMouseEnter={ playSoundEffect }>
 					<Icon name={ Icons.IconMedia } />
 					<span>CREDITS</span>
 				</Link>

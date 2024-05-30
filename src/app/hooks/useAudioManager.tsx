@@ -4,45 +4,74 @@ import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { Files } from "@/app/vars/Files";
 
 const AudioManagerContext = createContext<undefined | {
-	playAudio: (file: string, force: boolean) => void,
-	playHoverButtonAudio: () => void,
-	audioEnabled: boolean,
-	setAudioEnabled: Function
+	playSoundEffect: () => void,
+	musicEnabled: boolean,
+	toggleMusicEnabled: Function,
+	soundEffectsEnabled: boolean,
+	toggleSoundEffectEnabled: Function
 	autoEnableAudio: Function
 }>(undefined);
 
-const AUDIO_LOCAL_STORAGE_KEY = "audio";
-const AUDIO_ENABLE_LOCAL_STORAGE_KEY = "audioEnable";
+const MUSIC_ENABLE_LOCAL_STORAGE_KEY = "musicEnable";
+const SOUND_EFFECTS_ENABLE_LOCAL_STORAGE_KEY = "soundEffectsEnable";
 
 export const AudioManagerProvider = ({ children }: any) => {
 
 	const lastAudioPlayed = useRef(new Date().getTime());
 	const [bgAudio, setBgAudio] = useState<HTMLAudioElement>();
 
-	const [audioEnabled, setAudioEnabled] = useState(false);
+	const [musicEnabled, setMusicEnabled] = useState(false);
+	const [soundEffectsEnabled, setSoundEffectsEnabled] = useState(false);
 
-	useEffect(() => {
+	const controlMusic = (enable: boolean = true) => {
 		let audio = bgAudio as any;
 		if (!bgAudio) {
 			audio = new Audio(Files.AUDIOS.BACKGROUND);
 			setBgAudio(audio);
-			return;
 		}
 
-		if (audioEnabled) {
+		if (enable) {
 			audio.play();
 			audio.loop = true;
 		} else {
 			audio.pause();
 		}
 
-		if (localStorage.getItem(AUDIO_LOCAL_STORAGE_KEY)) {
-			localStorage.setItem(AUDIO_ENABLE_LOCAL_STORAGE_KEY, String(audioEnabled));
+		if (localStorage.getItem(MUSIC_ENABLE_LOCAL_STORAGE_KEY)) {
+			localStorage.setItem(MUSIC_ENABLE_LOCAL_STORAGE_KEY, String(enable));
 		}
-	}, [audioEnabled]);
+	}
 
-	const playAudio = (file: string, force = false) => {
-		if (!audioEnabled) {
+
+	const toggleMusicEnabled = () => {
+		const me = !musicEnabled;
+		setMusicEnabled(me);
+		controlMusic(me);
+	};
+
+	const playSoundEffect = () => {
+		if (!soundEffectsEnabled) {
+			return;
+		}
+
+		playAudio(Files.AUDIOS.HOVER_BUTTON, true);
+	}
+
+	const toggleSoundEffectEnabled = () => {
+		const se = !soundEffectsEnabled;
+		setSoundEffectsEnabled(se);
+		if (localStorage.getItem(SOUND_EFFECTS_ENABLE_LOCAL_STORAGE_KEY)) {
+			localStorage.setItem(SOUND_EFFECTS_ENABLE_LOCAL_STORAGE_KEY, String(se));
+		}
+	}
+
+	const autoEnableAudio = () => {
+		autoEnableMusic();
+		autoEnableSoundEffects();
+	}
+
+	function playAudio(file: string, force = false) {
+		if (!musicEnabled && !soundEffectsEnabled) {
 			return;
 		}
 
@@ -54,29 +83,49 @@ export const AudioManagerProvider = ({ children }: any) => {
 
 		const audio = new Audio(file);
 		audio.play();
-	};
-
-	const playHoverButtonAudio = () => {
-		playAudio(Files.AUDIOS.HOVER_BUTTON, true);
 	}
 
-	const autoEnableAudio = () => {
-		if (!localStorage.getItem(AUDIO_LOCAL_STORAGE_KEY)) {
-			localStorage.setItem(AUDIO_LOCAL_STORAGE_KEY, "true");
-			setAudioEnabled(true);
+	function autoEnableMusic() {
+		if ((localStorage.getItem(MUSIC_ENABLE_LOCAL_STORAGE_KEY) || '')?.length === 0) {
+			localStorage.setItem(MUSIC_ENABLE_LOCAL_STORAGE_KEY, "true");
+			setMusicEnabled(true);
+			controlMusic();
 			return;
 		}
 
-		if (localStorage.getItem(AUDIO_ENABLE_LOCAL_STORAGE_KEY) === "false") {
+		if (localStorage.getItem(MUSIC_ENABLE_LOCAL_STORAGE_KEY) === "false") {
+			controlMusic(false);
 			return;
 		}
 
-		setAudioEnabled(true);
+		setMusicEnabled(true);
+		controlMusic(true);
+	}
+
+	function autoEnableSoundEffects() {
+		if ((localStorage.getItem(SOUND_EFFECTS_ENABLE_LOCAL_STORAGE_KEY) || '')?.length === 0) {
+			localStorage.setItem(SOUND_EFFECTS_ENABLE_LOCAL_STORAGE_KEY, "true");
+			setSoundEffectsEnabled(true);
+			return;
+		}
+
+		if (localStorage.getItem(SOUND_EFFECTS_ENABLE_LOCAL_STORAGE_KEY) === "false") {
+			return;
+		}
+
+		setSoundEffectsEnabled(true);
 	}
 
 	return (
 		<AudioManagerContext.Provider
-			value={ { playAudio, playHoverButtonAudio, audioEnabled, setAudioEnabled, autoEnableAudio } }
+			value={
+				{
+					playSoundEffect,
+					musicEnabled, toggleMusicEnabled,
+					soundEffectsEnabled, toggleSoundEffectEnabled,
+					autoEnableAudio
+				}
+			}
 		>
 			{ children }
 		</AudioManagerContext.Provider>

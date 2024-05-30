@@ -18,14 +18,14 @@ export default function SettingsButton(props: SettingsButtonProps) {
 		right = "2.1rem",
 	} = props;
 
-	const { playHoverButtonAudio } = useAudioManager();
+	const { playSoundEffect } = useAudioManager();
 
 	return (
 		<Link
 			className={ styles.settingsButton }
 			style={ { right } }
 			href={ Routes.SETTINGS  + window.location.hash }
-			onMouseEnter={ playHoverButtonAudio }
+			onMouseEnter={ playSoundEffect }
 		>
 			<Icon name={ Icons.IconSettings } />
 		</Link>

@@ -3,6 +3,7 @@ import styles from "./ChooseMap.module.css";
 import { Maps } from "@/app/components/maps/Maps";
 import { GameStore, GameStoreState } from "@/app/stores/GameStore";
 import Select from "react-select";
+import { useAudioManager } from "@/app/hooks/useAudioManager";
 
 // https://react-select.com/
 
@@ -12,6 +13,8 @@ export function ChooseMap() {
 		currentConfig: state.currentConfig,
 		ready: state.ready
 	}));
+
+	const { playSoundEffect } = useAudioManager();
 
 	const customStyles = {
 		control: (provided: any) => ({
@@ -77,7 +80,7 @@ export function ChooseMap() {
 	});
 
 	return (
-		<>
+		<span onMouseEnter={ playSoundEffect }>
 			<Select
 				className={ styles.select }
 				options={ options }
@@ -86,6 +89,6 @@ export function ChooseMap() {
 				defaultValue={ { value: currentConfig.map.name, label: currentConfig.map.name } }
 				isSearchable={ false }
 			/>
-		</>
+		</span>
 	);
 }

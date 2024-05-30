@@ -17,7 +17,7 @@ export default function ConnectWallet() {
 		setUser: state.setUser
 	}));
 
-	const { playHoverButtonAudio } = useAudioManager();
+	const { playSoundEffect } = useAudioManager();
 
 	const { open } = useWeb3Modal();
 	const { isConnecting, isReconnecting, isConnected, address } = useAccount();
@@ -77,7 +77,7 @@ export default function ConnectWallet() {
 
 						isConnected ? disconnectWallet() : openConnectWallet()
 					} }
-					onMouseEnter={ playHoverButtonAudio }
+					onMouseEnter={ playSoundEffect }
 				>
 					<Icon name={ Icons.IconWallet }/>
 					<span>

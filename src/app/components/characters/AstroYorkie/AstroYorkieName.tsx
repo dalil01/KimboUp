@@ -28,7 +28,7 @@ const AstroYorkieName = forwardRef(function AstroYorkieName({ }: AstroYorkieName
                     <Text
                         position-y={ 0.292 }
                         position-x={ 0.005 }
-                        position-z={ -0.02 }
+                        position-z={ -0.01 }
                         fontSize={ 0.06 }
                         fontWeight={ 600 }
                         anchorX="center"

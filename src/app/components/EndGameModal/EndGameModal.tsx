@@ -29,7 +29,7 @@ export default function EndGameModal() {
 	const { isConnected, address, connector } = useAccount();
 	const [saved, setSaved] = useState(false);
 
-	const { playHoverButtonAudio } = useAudioManager();
+	const { playSoundEffect } = useAudioManager();
 
 	useEffect(() => {
 		return () => {
@@ -108,7 +108,7 @@ export default function EndGameModal() {
                             <button
 								className={ styles.saveToKimbonet }
 								onClick={ handleSaveToKimbonet }
-                                onMouseEnter={ playHoverButtonAudio }
+                                onMouseEnter={ playSoundEffect }
 							>
 								<Icon name={ Icons.IconSave } />
 								<span>SAVE TO KIMBONET</span>
@@ -119,13 +119,13 @@ export default function EndGameModal() {
 
 				<div className={ styles.separator }></div>
 
-				<div className={ styles.footer } onMouseEnter={ playHoverButtonAudio }>
+				<div className={ styles.footer } onMouseEnter={ playSoundEffect }>
 					<button
 						className={ styles.footerButton }
 						onClick={ () => {
 							restart();
 						} }
-						onMouseEnter={ playHoverButtonAudio }
+						onMouseEnter={ playSoundEffect }
 					>
 						<Icon name={ Icons.IconRestart }/>
 						<span>RESTART</span>
@@ -137,7 +137,7 @@ export default function EndGameModal() {
 							restart();
 							lobby();
 						} }
-						onMouseEnter={ playHoverButtonAudio }
+						onMouseEnter={ playSoundEffect }
 					>
 						<Icon name={ Icons.IconClose } />
 						<span>BACK TO LOBBY</span>

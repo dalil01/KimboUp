@@ -15,7 +15,7 @@ import Timer from "@/app/components/Timer/Timer";
 import EndGameModal from "@/app/components/EndGameModal/EndGameModal";
 import { CharacterControllerFactory } from "@/app/components/characters/CharacterControllerFactory";
 import { MapFactory } from "@/app/components/maps/MapFactory";
-import { insertCoin, onPlayerJoin } from "playroomkit";
+import { insertCoin, myPlayer, onPlayerJoin } from "playroomkit";
 
 export default function Game() {
 
@@ -28,7 +28,8 @@ export default function Game() {
 		setPlayers: state.setPlayers,
 	}));
 
-	const { playHoverButtonAudio } = useAudioManager();
+	const currentPlayer = myPlayer();
+	const { playSoundEffect } = useAudioManager();
 
 	const [linkCopied, setLinkCopied] = useState(false);
 
@@ -48,7 +49,7 @@ export default function Game() {
 			setPlayers((players) => [...players.filter((p) => p.state.id !== state.id), newPlayer]);
 
 			state.onQuit(() => {
-				setPlayers((players) => players.filter((p) => p.state.id !== state.id));
+				setPlayers((players) => players.filter((p) => p.state.id !== state.id && (currentPlayer?.id ? currentPlayer.id !== p.state.id: true)));
 			});
 		});
 
@@ -78,7 +79,7 @@ export default function Game() {
 							setLinkCopied(true);
 						});
 					} }
-					onMouseEnter={ playHoverButtonAudio }
+					onMouseEnter={ playSoundEffect }
 					onMouseLeave={ () => {
 						setLinkCopied(false);
 					} }
@@ -91,7 +92,7 @@ export default function Game() {
 					onClick={ () => {
 						restart();
 					} }
-					onMouseEnter={ playHoverButtonAudio }
+					onMouseEnter={ playSoundEffect }
 			>
 				<Icon name={ Icons.IconRestart }/>
 			</button>
@@ -101,7 +102,7 @@ export default function Game() {
 						restart();
 						lobby();
 					} }
-					onMouseEnter={ playHoverButtonAudio }
+					onMouseEnter={ playSoundEffect }
 			>
 				<Icon name={ Icons.IconClose }/>
 			</button>
@@ -116,7 +117,7 @@ export default function Game() {
 				} }
 			>
 				<Suspense fallback={ <Loading/> }>
-					<Preload all/>
+					<Preload all />
 
 					<Physics debug={ false }>
 						{

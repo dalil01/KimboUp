@@ -7,6 +7,7 @@ import { readContract } from "@wagmi/core";
 import { config } from "@/app/blockchain/config/Web3Config";
 import { UTime } from "@/app/utils/UTime";
 import { GameStore, GameStoreState } from "@/app/stores/GameStore";
+import { useAudioManager } from "@/app/hooks/useAudioManager";
 
 
 const itemsPerPage = 25;
@@ -14,6 +15,8 @@ const itemsPerPage = 25;
 export default function Rankings() {
 
 	const currentConfig = GameStore((state: GameStoreState) => state.currentConfig);
+
+	const { playSoundEffect } = useAudioManager();
 
 	const [state, setState] = useState({
 		loading: true,
@@ -108,9 +111,9 @@ export default function Rankings() {
 						</table>
 
 						<div className={ styles.pagination }>
-							<button disabled={ !hasPreviousPage } onClick={ handlePreviousPage }>PREVIOUS</button>
+							<button disabled={ !hasPreviousPage } onClick={ handlePreviousPage } onMouseEnter={ playSoundEffect }>PREVIOUS</button>
 							<span>PAGE { pageNumber }</span>
-							<button disabled={ !hasNextPage } onClick={ handleNextPage }>NEXT</button>
+							<button disabled={ !hasNextPage } onClick={ handleNextPage } onMouseEnter={ playSoundEffect }>NEXT</button>
 						</div>
 					</>
 			}

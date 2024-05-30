@@ -15,7 +15,7 @@ export default function CharacterEditor() {
 
 	const [displayContent, setDisplayContent] = useState(false);
 
-	const { playHoverButtonAudio } = useAudioManager();
+	const { playSoundEffect } = useAudioManager();
 
 	useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {
@@ -39,7 +39,7 @@ export default function CharacterEditor() {
 						e.stopPropagation();
 						setDisplayContent(!displayContent)
 					} }
-					onMouseEnter={ playHoverButtonAudio }
+					onMouseEnter={ playSoundEffect }
 			>
 				<Icon name={ Icons.IconHanger }/>
 			</button>
