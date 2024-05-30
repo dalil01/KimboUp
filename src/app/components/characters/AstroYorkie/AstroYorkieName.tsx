@@ -1,17 +1,31 @@
 import { Text } from "@react-three/drei";
-import { MutableRefObject, useRef, forwardRef } from "react";
-import { GameStore, GameStoreState } from "@/app/stores/GameStore";
+import { MutableRefObject, useRef, forwardRef, useImperativeHandle, useState, SetStateAction } from "react";
+import { GameStore, GameStoreState, PlayerState } from "@/app/stores/GameStore";
+import { MultiPlayer } from "@/app/types/MultiPlayer";
+import { useFrame } from "@react-three/fiber";
 
 type AstroYorkieNameProps = {
-	name: string
+	playerState: any
 }
 
-const AstroYorkieName = forwardRef(function AstroYorkieName({ name }: AstroYorkieNameProps, ref: any) {
+const AstroYorkieName = forwardRef(function AstroYorkieName({ playerState }: AstroYorkieNameProps, ref: any) {
 
+	const [currentName, setCurrentName] = useState('');
+
+	useFrame(() => {
+		if (currentName) {
+			return;
+		}
+
+		const username = playerState.getState(PlayerState.USERNAME);
+		if (playerState.getState(PlayerState.USERNAME) && username != currentName) {
+			setCurrentName(username);
+		}
+	});
 
 	return (
 		<>
-			{ name &&
+			{ currentName &&
                 <group ref={ ref }>
                     <Text
                         position-y={ 0.3 }
@@ -20,7 +34,7 @@ const AstroYorkieName = forwardRef(function AstroYorkieName({ name }: AstroYorki
                         anchorX="center"
                         anchorY="middle"
                     >
-						{ name }
+						{ currentName }
                         <meshBasicMaterial color="white"/>
                     </Text>
                     <Text
@@ -32,7 +46,7 @@ const AstroYorkieName = forwardRef(function AstroYorkieName({ name }: AstroYorki
                         anchorX="center"
                         anchorY="middle"
                     >
-						{ name }
+						{ currentName }
                         <meshBasicMaterial color="black"/>
                     </Text>
                 </group>

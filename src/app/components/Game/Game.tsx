@@ -1,7 +1,7 @@
 import styles from "./Game.module.css";
 
 import { Canvas } from "@react-three/fiber";
-import { GameState, GameStore, GameStoreState } from "@/app/stores/GameStore";
+import { GameState, GameStore, GameStoreState, PlayerState } from "@/app/stores/GameStore";
 import React, { Suspense, useEffect, useState } from "react";
 import Loading from "@/app/components/Loading/Loading";
 import { Preload } from "@react-three/drei";
@@ -15,11 +15,12 @@ import Timer from "@/app/components/Timer/Timer";
 import EndGameModal from "@/app/components/EndGameModal/EndGameModal";
 import { CharacterControllerFactory } from "@/app/components/characters/CharacterControllerFactory";
 import { MapFactory } from "@/app/components/maps/MapFactory";
-import { insertCoin, myPlayer, onPlayerJoin } from "playroomkit";
+import { insertCoin, isHost, myPlayer, onPlayerJoin } from "playroomkit";
 
 export default function Game() {
 
-	const { currentConfig, state, lobby, restart, players, setPlayers } = GameStore((state: GameStoreState) => ({
+	const { user, currentConfig, state, lobby, restart, players, setPlayers } = GameStore((state: GameStoreState) => ({
+		user: state.user,
 		currentConfig: state.currentConfig,
 		state: state.state,
 		lobby: state.lobby,
@@ -29,6 +30,7 @@ export default function Game() {
 	}));
 
 	const currentPlayer = myPlayer();
+
 	const { playSoundEffect } = useAudioManager();
 
 	const [linkCopied, setLinkCopied] = useState(false);
@@ -45,7 +47,7 @@ export default function Game() {
 		};
 
 		onPlayerJoin((state) => {
-			const newPlayer = { state }
+			const newPlayer = { state };
 			setPlayers((players) => [...players.filter((p) => p.state.id !== state.id), newPlayer]);
 
 			state.onQuit(() => {
