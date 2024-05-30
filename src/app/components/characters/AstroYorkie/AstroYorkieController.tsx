@@ -45,7 +45,7 @@ export default function AstroYorkieController({
 
 	const canJump = useRef(true);
 
-	if (playerState.id === currentPlayer?.id && playerBodyRef.current) {
+	if (playerState.id === currentPlayer?.id) {
 		playerState.setState(PlayerState.BODY_NAME, bodyName);
 		playerState.setState(PlayerState.USERNAME, user?.username);
 	}
@@ -152,7 +152,7 @@ export default function AstroYorkieController({
 			>
 				<group ref={ playerRef }>
 					{ playerState.id !== currentPlayer?.id &&
-                        <AstroYorkieName ref={ textRef } name={ playerState.getState(PlayerState.USERNAME) || 'dfdf' }/>
+                        <AstroYorkieName ref={ textRef } name={ playerState.getState(PlayerState.USERNAME) }/>
 					}
 					<AstroYorkie
 						scale={ 0.75 }
