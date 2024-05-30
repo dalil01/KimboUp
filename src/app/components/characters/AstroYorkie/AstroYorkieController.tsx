@@ -151,7 +151,7 @@ export default function AstroYorkieController({
 			>
 				<group ref={ playerRef }>
 					{ playerState.id !== currentPlayer?.id &&
-						<AstroYorkieName ref={ textRef } />
+						<AstroYorkieName ref={ textRef } name={ playerState.getState(PlayerState.USERNAME) } />
 					}
 					<AstroYorkie
 						scale={ 0.75 }

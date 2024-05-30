@@ -3,17 +3,15 @@ import { MutableRefObject, useRef, forwardRef } from "react";
 import { GameStore, GameStoreState } from "@/app/stores/GameStore";
 
 type AstroYorkieNameProps = {
+	name: string
 }
 
-const AstroYorkieName = forwardRef(function AstroYorkieName({ }: AstroYorkieNameProps, ref: any) {
+const AstroYorkieName = forwardRef(function AstroYorkieName({ name }: AstroYorkieNameProps, ref: any) {
 
-	const { user } = GameStore((state: GameStoreState) => ({
-		user: state.user,
-	}));
 
 	return (
 		<>
-			{ user?.username &&
+			{ name &&
                 <group ref={ ref }>
                     <Text
                         position-y={ 0.3 }
@@ -22,7 +20,7 @@ const AstroYorkieName = forwardRef(function AstroYorkieName({ }: AstroYorkieName
                         anchorX="center"
                         anchorY="middle"
                     >
-						{ user.username }
+						{ name }
                         <meshBasicMaterial color="white"/>
                     </Text>
                     <Text
@@ -34,7 +32,7 @@ const AstroYorkieName = forwardRef(function AstroYorkieName({ }: AstroYorkieName
                         anchorX="center"
                         anchorY="middle"
                     >
-						{ user.username }
+						{ name }
                         <meshBasicMaterial color="black"/>
                     </Text>
                 </group>
