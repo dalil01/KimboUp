@@ -46,6 +46,8 @@ export default function Rankings() {
 					args: [pageNumber, itemsPerPage]
 				});
 
+				console.log(usersRequest)
+
 				if ((usersRequest instanceof Array) && usersRequest.length == 4) {
 					setState({
 						loading: false,

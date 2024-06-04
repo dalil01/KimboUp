@@ -15,11 +15,17 @@ contract CarCity {
 
     function setUser(address _address, string memory _username) public {
         require(bytes(_username).length > 0, "Username required.");
-        require(addressByUsername[_username] == address(0), "This username already exists.");
+        require(addressByUsername[_username] == address(0) || addressByUsername[_username] == _address, "This username already exists.");
+
+        if (bytes(users[_address].username).length == 0) {
+            users[_address].timeMs = 0;
+            userAddressByTime.push(_address);
+        } else {
+            addressByUsername[users[_address].username] = address(0);
+        }
+
         addressByUsername[_username] = _address;
         users[_address].username = _username;
-        users[_address].timeMs = 0;
-        userAddressByTime.push(_address);
     }
 
     function setTime(address _address, uint256 _timeMs) public {
