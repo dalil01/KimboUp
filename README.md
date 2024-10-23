@@ -15,9 +15,7 @@ The goal is simple: reach the red flag as fast as possible. **KimboUP** is desig
 
 Check out the gameplay in action by watching the demo video:
 
-<video width="320" height="240" controls>
-  <source src="resources/videos/kimbo_up.mov" type="video/mp4">
-</video>
+🔗 https://drive.google.com/file/d/1YRTUFB3LGz89Y4iRrp1PJL_WMVHy-YgN/view
 
 ## Getting Started
 
