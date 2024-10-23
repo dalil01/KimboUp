@@ -44,4 +44,5 @@ src/app/blockchain/artifacts
 # dev
 .idea
 draft
-resources
+resources/blender
+resources/hdrs
