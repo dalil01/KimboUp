@@ -42,5 +42,6 @@ src/app/blockchain/cache
 src/app/blockchain/artifacts
 
 # dev
+.idea
 draft
 resources
