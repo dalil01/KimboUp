@@ -2,13 +2,13 @@
 
 [![GNU GPL v3.0](https://img.shields.io/badge/licence-GNU%20GPL%20v3.0-blue)](https://github.com/dalil01/KimboUp/blob/main/LICENCE)
 
-**KimboUP** is an addictive multiplayer racing game built with **Three.js**, **React**, and **Next.js**, where players compete to reach the red flag as quickly as possible. Challenge your friends to frantic races and see who comes out on top!
+**KimboUp** is an addictive multiplayer racing game built with **Three.js**, **React**, and **Next.js**, where players compete to reach the red flag as quickly as possible. Challenge your friends to frantic races and see who comes out on top!
 
 🔗 https://kimbo-up.vercel.app/
 
 ## Gameplay
 
-The goal is simple: reach the red flag as fast as possible. **KimboUP** is designed to be fun and competitive, especially when played with friends. Here’s a quick overview:
+The goal is simple: reach the red flag as fast as possible. **KimboUp** is designed to be fun and competitive, especially when played with friends. Here’s a quick overview:
 
 - **Multiplayer Mode**: Invite your friends and race against them in intense, fast-paced games.
 - **Kimbo Tokens**: You can play with or without kimbo tokens. However, without tokens, you won't be able to save your scores or enjoy the full benefits of the play-to-earn model, which allows you to earn prizes like NFTs and tokens.
