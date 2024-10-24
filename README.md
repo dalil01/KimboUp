@@ -4,6 +4,8 @@
 
 **KimboUP** is an addictive multiplayer racing game built with **Three.js**, **React**, and **Next.js**, where players compete to reach the red flag as quickly as possible. Challenge your friends to frantic races and see who comes out on top!
 
+🔗 https://kimbo-up.vercel.app/
+
 ## Gameplay
 
 The goal is simple: reach the red flag as fast as possible. **KimboUP** is designed to be fun and competitive, especially when played with friends. Here’s a quick overview:
@@ -38,11 +40,17 @@ To record your scores on the **kimbonet** subnet and fully enjoy the play-to-ear
 - **Ethers.js**: A library for interacting with the Ethereum blockchain and smart contracts.
 - **PlayroomKit**: Provides features for multiplayer game interactions.
 
-## Ready to Play?
+## TODO
 
-Are you ready to race with your **kimbros**? Get started now and see if you have what it takes to be the fastest!
-
-🔗 https://kimbo-up.vercel.app/
+- Add flame shaders during movement to enhance visual effects.
+- Implement sound effects for character movement to improve game immersion.
+- Add a character customization system for more personalized gameplay.
+- Improve the ranking system for better score management and display.
+- Develop a backend to store user results and rankings.
+- Add a new map for more diverse racing environments.
+- Introduce additional characters for more variety in gameplay.
+- Refactor the code for better maintainability and performance.
+- [Additional ideas or improvements...]
 
 ## Contributing
 
