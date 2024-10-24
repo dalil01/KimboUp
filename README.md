@@ -42,14 +42,14 @@ To record your scores on the **kimbonet** subnet and fully enjoy the play-to-ear
 
 ## TODO
 
-- Add flame shaders during movement to enhance visual effects.
-- Implement sound effects for character movement to improve game immersion.
-- Add a character customization system for more personalized gameplay.
-- Improve the ranking system for better score management and display.
-- Develop a backend to store user results and rankings.
-- Add a new map for more diverse racing environments.
-- Introduce additional characters for more variety in gameplay.
-- Refactor the code for better maintainability and performance.
+- Add flame shaders during movement to enhance visual effects
+- Implement sound effects for character movement to improve game immersion
+- Add a character customization system for more personalized gameplay
+- Improve the ranking system for better score management and display
+- Develop a backend to store user results and rankings
+- Add a new map for more diverse racing environments
+- Introduce additional characters for more variety in gameplay
+- Refactor the code for better maintainability and performance
 - [Additional ideas or improvements...]
 
 ## Contributing
